@@ -1,633 +1,264 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
   <title>Xesoid WMS ERP | Smart Logistics & Warehouse Management</title>
-  <!-- Font Awesome 6 for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
-      background: #f4f6fb;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-      color: #1e293b;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: #f4f6fb; display: flex; height: 100vh; overflow: hidden; color: #1e293b;
     }
-
-    /* ===== SIDEBAR ===== */
+    /* Sidebar */
     .sidebar {
-      width: 260px;
-      background: #0f172a;
-      color: #cbd5e1;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
-      transition: width 0.2s;
+      width: 260px; background: #0f172a; color: #cbd5e1; display: flex; flex-direction: column;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08); transition: width 0.2s;
     }
-
-    .sidebar-header {
-      padding: 24px 20px 20px;
-      border-bottom: 1px solid #1e293b;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: white;
-      letter-spacing: -0.3px;
-    }
-
-    .logo i {
-      color: #3b82f6;
-      font-size: 2rem;
-    }
-
-    .logo span {
-      background: linear-gradient(135deg, #ffffff, #e2e8f0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .sidebar-nav {
-      flex: 1;
-      padding: 20px 12px;
-      overflow-y: auto;
-    }
-
+    .sidebar-header { padding: 24px 20px 20px; border-bottom: 1px solid #1e293b; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; font-weight: 700; color: white; }
+    .logo i { color: #3b82f6; font-size: 2rem; }
+    .logo span { background: linear-gradient(135deg, #ffffff, #e2e8f0); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .sidebar-nav { flex: 1; padding: 20px 12px; overflow-y: auto; }
     .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      margin-bottom: 6px;
-      font-weight: 500;
-      font-size: 0.95rem;
-      color: #94a3b8;
-      transition: all 0.2s;
-      cursor: pointer;
-      white-space: nowrap;
+      display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px;
+      margin-bottom: 6px; font-weight: 500; font-size: 0.95rem; color: #94a3b8;
+      transition: all 0.2s; cursor: pointer; white-space: nowrap;
     }
-
-    .nav-item i {
-      width: 22px;
-      font-size: 1.2rem;
-      text-align: center;
-    }
-
-    .nav-item.active {
-      background: #1e293b;
-      color: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      font-weight: 600;
-    }
-
-    .nav-item.active i {
-      color: #3b82f6;
-    }
-
-    .nav-item:hover:not(.active) {
-      background: #1e293b80;
-      color: #e2e8f0;
-    }
-
-    .sidebar-footer {
-      padding: 16px 20px;
-      border-top: 1px solid #1e293b;
-      font-size: 0.8rem;
-      color: #64748b;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* ===== MAIN CONTENT ===== */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      background: #f8fafc;
-    }
-
-    /* top bar */
+    .nav-item i { width: 22px; font-size: 1.2rem; text-align: center; }
+    .nav-item.active { background: #1e293b; color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.2); font-weight: 600; }
+    .nav-item.active i { color: #3b82f6; }
+    .nav-item:hover:not(.active) { background: #1e293b80; color: #e2e8f0; }
+    .sidebar-footer { padding: 16px 20px; border-top: 1px solid #1e293b; font-size: 0.8rem; color: #64748b; display: flex; align-items: center; gap: 8px; }
+    /* Main */
+    .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background: #f8fafc; }
     .topbar {
-      background: white;
-      padding: 14px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e2e8f0;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
-      flex-wrap: wrap;
+      background: white; padding: 14px 28px; display: flex; align-items: center;
+      justify-content: space-between; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap;
     }
-
     .search-box {
-      background: #f1f5f9;
-      border-radius: 24px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 320px;
-      border: 1px solid #e2e8f0;
-      transition: 0.2s;
+      background: #f1f5f9; border-radius: 24px; padding: 10px 20px; display: flex;
+      align-items: center; gap: 10px; width: 320px; border: 1px solid #e2e8f0;
     }
-
-    .search-box i {
-      color: #64748b;
-      font-size: 1rem;
+    .search-box i { color: #64748b; }
+    .search-box input { border: none; background: transparent; outline: none; width: 100%; font-size: 0.9rem; }
+    .barcode-btn {
+      background: #0f172a; color: white; padding: 8px 18px; border-radius: 20px; font-weight: 500;
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
     }
-
-    .search-box input {
-      border: none;
-      background: transparent;
-      outline: none;
-      width: 100%;
-      font-size: 0.9rem;
-      color: #1e293b;
-    }
-
-    .search-box:focus-within {
-      border-color: #3b82f6;
-      background: white;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .barcode-scan {
-      background: #0f172a;
-      color: white;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .barcode-scan:hover {
-      background: #1e293b;
-    }
-
-    .user-icon {
-      font-size: 1.8rem;
-      color: #334155;
-      cursor: pointer;
-    }
-
-    /* page content */
-    .content {
-      padding: 24px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .page-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .page-title h2 {
-      font-weight: 600;
-      font-size: 1.8rem;
-      color: #0f172a;
-    }
-
-    .badge {
-      background: #dbeafe;
-      color: #1e40af;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-
-    /* stat cards */
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
+    .content { padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; }
+    .page-section { display: none; }
+    .page-section.active-section { display: flex; flex-direction: column; gap: 20px; }
+    .page-title { display: flex; justify-content: space-between; align-items: center; }
+    h2 { font-weight: 600; font-size: 1.8rem; }
+    .badge { background: #dbeafe; color: #1e40af; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.8rem; }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .stat-card {
-      background: white;
-      border-radius: 18px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #f1f5f9;
+      background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      display: flex; align-items: center; justify-content: space-between; border: 1px solid #f1f5f9;
     }
-
-    .stat-info h4 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      color: #64748b;
-      margin-bottom: 6px;
-    }
-
-    .stat-info h3 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #0f172a;
-    }
-
-    .stat-icon {
-      font-size: 2.2rem;
-      color: #3b82f6;
-      opacity: 0.8;
-    }
-
-    /* tables & workflow */
-    .double-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
+    .stat-info h4 { font-size: 0.8rem; text-transform: uppercase; color: #64748b; }
+    .stat-info h3 { font-size: 2rem; font-weight: 700; }
+    .stat-icon { font-size: 2.2rem; color: #3b82f6; opacity: 0.8; }
+    .double-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .card {
-      background: white;
-      border-radius: 18px;
-      padding: 18px 20px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+      background: white; border-radius: 18px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.02);
       border: 1px solid #edf2f7;
     }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .card-header h3 {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #1e293b;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-    }
-
-    th {
-      text-align: left;
-      padding: 10px 4px;
-      color: #64748b;
-      font-weight: 500;
-      border-bottom: 1px solid #e2e8f0;
-    }
-
-    td {
-      padding: 10px 4px;
-      border-bottom: 1px solid #f1f5f9;
-      color: #334155;
-    }
-
-    .status {
-      background: #dcfce7;
-      color: #166534;
-      padding: 4px 12px;
-      border-radius: 14px;
-      font-weight: 600;
-      font-size: 0.7rem;
-    }
-
-    .status.warning {
-      background: #fef9c3;
-      color: #854d0e;
-    }
-
-    .barcode-uid {
-      font-family: monospace;
-      background: #f1f5f9;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 600;
-    }
-
-    .flow-steps {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 12px 0;
-      flex-wrap: wrap;
-    }
-
-    .step {
-      text-align: center;
-      background: #f8fafc;
-      padding: 12px 8px;
-      border-radius: 14px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      flex: 1;
-      margin: 0 4px;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-    }
-
-    .step i {
-      display: block;
-      font-size: 1.3rem;
-      margin-bottom: 6px;
-      color: #3b82f6;
-    }
-
-    .arrow {
-      color: #94a3b8;
-      font-size: 1.2rem;
-    }
-
-    .bin-tag {
-      background: #e0e7ff;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.75rem;
-    }
-
-    @media (max-width: 1000px) {
-      .stat-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .double-panel {
-        grid-template-columns: 1fr;
-      }
-      .sidebar {
-        width: 90px;
-      }
-      .sidebar .nav-item span,
-      .sidebar .logo span,
-      .sidebar-footer span {
-        display: none;
-      }
-      .sidebar .logo i {
-        margin: 0 auto;
-      }
-      .nav-item {
-        justify-content: center;
-      }
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { text-align: left; padding: 10px 4px; color: #64748b; border-bottom: 1px solid #e2e8f0; }
+    td { padding: 10px 4px; border-bottom: 1px solid #f1f5f9; }
+    .status { background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 14px; font-weight: 600; font-size: 0.7rem; }
+    .status.warning { background: #fef9c3; color: #854d0e; }
+    .barcode-uid { font-family: monospace; background: #f1f5f9; padding: 2px 8px; border-radius: 6px; }
+    .bin-tag { background: #e0e7ff; padding: 4px 10px; border-radius: 8px; font-weight: 600; }
+    .flow-steps { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .step { background: #f8fafc; padding: 12px 8px; border-radius: 14px; text-align: center; flex:1; margin:0 4px; }
+    .map-container { height: 200px; background: #e2e8f0; border-radius: 16px; position: relative; overflow: hidden; }
+    .vehicle-marker { position: absolute; font-size: 1.5rem; color: #2563eb; }
+    @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2,1fr); } .double-panel { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  <!-- Sidebar Navigation -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">
-        <i class="fas fa-cubes"></i>
-        <span>Xesoid WMS</span>
-      </div>
-    </div>
-    <div class="sidebar-nav">
-      <div class="nav-item active"><i class="fas fa-th-large"></i> <span>Dashboard</span></div>
-      <div class="nav-item"><i class="fas fa-calendar-plus"></i> <span>Booking</span></div>
-      <div class="nav-item"><i class="fas fa-truck"></i> <span>Pickup Mgmt</span></div>
-      <div class="nav-item"><i class="fas fa-warehouse"></i> <span>Warehouse</span></div>
-      <div class="nav-item"><i class="fas fa-shipping-fast"></i> <span>Delivery</span></div>
-      <div class="nav-item"><i class="fas fa-map-marker-alt"></i> <span>Vehicle Track</span></div>
-      <div class="nav-item"><i class="fas fa-id-card"></i> <span>Drivers</span></div>
-      <div class="nav-item"><i class="fas fa-chart-line"></i> <span>Analytics</span></div>
-      <div class="nav-item"><i class="fas fa-file-invoice"></i> <span>Reports</span></div>
-      <div class="nav-item"><i class="fas fa-file-invoice-dollar"></i> <span>Invoice</span></div>
-      <div class="nav-item"><i class="fas fa-building"></i> <span>Vendors</span></div>
-      <div class="nav-item"><i class="fas fa-users"></i> <span>Customers</span></div>
-      <div class="nav-item"><i class="fas fa-cog"></i> <span>Settings</span></div>
-      <div class="nav-item"><i class="fas fa-project-diagram"></i> <span>Flowchart</span></div>
-    </div>
-    <div class="sidebar-footer">
-      <i class="fas fa-circle text-green-400" style="color: #22c55e;"></i> <span>WMS v1.0 · Online</span>
-    </div>
-  </aside>
+<aside class="sidebar">
+  <div class="sidebar-header"><div class="logo"><i class="fas fa-cubes"></i><span>Xesoid WMS</span></div></div>
+  <div class="sidebar-nav" id="sidebarNav">
+    <div class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></div>
+    <div class="nav-item" data-page="booking"><i class="fas fa-calendar-plus"></i><span>Booking</span></div>
+    <div class="nav-item" data-page="warehouse"><i class="fas fa-warehouse"></i><span>Warehouse</span></div>
+    <div class="nav-item" data-page="tracking"><i class="fas fa-map-marker-alt"></i><span>Tracking</span></div>
+    <div class="nav-item" data-page="vehicles"><i class="fas fa-truck"></i><span>Vehicles</span></div>
+    <div class="nav-item" data-page="analytics"><i class="fas fa-chart-line"></i><span>Analytics</span></div>
+    <div class="nav-item" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></div>
+    <div class="nav-item" data-page="flowchart"><i class="fas fa-project-diagram"></i><span>Flowchart</span></div>
+  </div>
+  <div class="sidebar-footer"><i class="fas fa-circle" style="color:#22c55e;"></i><span>WMS v1.0 · Online</span></div>
+</aside>
 
-  <!-- Main Dashboard -->
-  <main class="main">
-    <div class="topbar">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search parcel, bin, driver, UID...">
-      </div>
-      <div class="topbar-actions">
-        <div class="barcode-scan">
-          <i class="fas fa-barcode"></i> Scan Barcode
-        </div>
-        <div class="user-icon">
-          <i class="fas fa-user-circle"></i>
-        </div>
-      </div>
-    </div>
+<main class="main">
+  <div class="topbar">
+    <div class="search-box"><i class="fas fa-search"></i><input type="text" id="globalSearch" placeholder="Search parcel, UID, driver..."></div>
+    <div class="barcode-btn" id="scanTrigger"><i class="fas fa-barcode"></i> Scan Barcode</div>
+  </div>
 
-    <div class="content">
-      <div class="page-title">
-        <h2>Warehouse Command Center</h2>
-        <span class="badge"><i class="far fa-clock"></i> Last sync: 2 min ago</span>
-      </div>
-
-      <!-- Stats -->
+  <div class="content" id="pageContent">
+    <!-- Dashboard -->
+    <div class="page-section active-section" id="dashboard">
+      <div class="page-title"><h2>Warehouse Command Center</h2><span class="badge"><i class="far fa-clock"></i> Last sync: 2 min ago</span></div>
       <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-info">
-            <h4>Inbound Today</h4>
-            <h3>1,284</h3>
-            <small style="color:#16a34a;">+12% vs yesterday</small>
-          </div>
-          <div class="stat-icon"><i class="fas fa-boxes"></i></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <h4>Outbound (POD)</h4>
-            <h3>942</h3>
-            <small>98.3% delivered</small>
-          </div>
-          <div class="stat-icon"><i class="fas fa-truck-loading"></i></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <h4>Active Bins</h4>
-            <h3>48/64</h3>
-            <small>75% utilization</small>
-          </div>
-          <div class="stat-icon"><i class="fas fa-th"></i></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-info">
-            <h4>Feeder Trips</h4>
-            <h3>7 active</h3>
-            <small>Branch→Hub</small>
-          </div>
-          <div class="stat-icon"><i class="fas fa-route"></i></div>
-        </div>
+        <div class="stat-card"><div class="stat-info"><h4>Inbound Today</h4><h3>1,284</h3></div><div class="stat-icon"><i class="fas fa-boxes"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h4>Outbound (POD)</h4><h3>942</h3></div><div class="stat-icon"><i class="fas fa-truck-loading"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h4>Active Bins</h4><h3>48/64</h3></div><div class="stat-icon"><i class="fas fa-th"></i></div></div>
+        <div class="stat-card"><div class="stat-info"><h4>Feeder Trips</h4><h3>7 active</h3></div><div class="stat-icon"><i class="fas fa-route"></i></div></div>
       </div>
-
-      <!-- Double panel: Warehouse bins & Recent parcels -->
       <div class="double-panel">
-        <div class="card">
-          <div class="card-header">
-            <h3><i class="fas fa-warehouse" style="margin-right: 8px;"></i>Bin Assignment (Inbound)</h3>
-            <span class="badge">Barcode UID</span>
-          </div>
-          <table>
-            <thead>
-              <tr><th>Parcel UID</th><th>Type</th><th>Bin</th><th>Status</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><span class="barcode-uid">82914</span></td><td>Fragile</td><td><span class="bin-tag">A-12</span></td><td><span class="status">Stored</span></td></tr>
-              <tr><td><span class="barcode-uid">67102</span></td><td>Document</td><td><span class="bin-tag">B-03</span></td><td><span class="status">Stored</span></td></tr>
-              <tr><td><span class="barcode-uid">45321</span></td><td>Electronics</td><td><span class="bin-tag">C-09</span></td><td><span class="status warning">Misplaced</span></td></tr>
-              <tr><td><span class="barcode-uid">90234</span></td><td>Standard</td><td><span class="bin-tag">A-01</span></td><td><span class="status">Stored</span></td></tr>
-              <tr><td><span class="barcode-uid">11876</span></td><td>Return</td><td><span class="bin-tag">R-04</span></td><td><span class="status warning">Damaged</span></td></tr>
-            </tbody>
-          </table>
-          <div style="margin-top: 12px; color: #3b82f6; font-size:0.8rem;"><i class="fas fa-qrcode"></i> Last 5 digits = UID identifier</div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3><i class="fas fa-exchange-alt"></i> Line Haul / Feeder Flow</h3>
-          </div>
-          <div class="flow-steps">
-            <div class="step"><i class="fas fa-store"></i> Branch</div>
-            <div class="arrow">→</div>
-            <div class="step"><i class="fas fa-truck"></i> Feeder</div>
-            <div class="arrow">→</div>
-            <div class="step"><i class="fas fa-building"></i> Hub</div>
-            <div class="arrow">→</div>
-            <div class="step"><i class="fas fa-truck-moving"></i> Line Haul</div>
-          </div>
-          <div style="margin-top: 16px;">
-            <p style="font-weight:600; margin-bottom:6px;">📦 Pickup Request → Inbound WMS</p>
-            <table>
-              <thead><tr><th>Driver</th><th>Pickup</th><th>POD</th></tr></thead>
-              <tbody>
-                <tr><td>Rajesh K.</td><td>#PU-231</td><td><span class="status">Signed</span></td></tr>
-                <tr><td>Ankit S.</td><td>#PU-245</td><td><span class="status warning">Pending</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tracking & Analytics preview -->
-      <div class="double-panel">
-        <div class="card">
-          <div class="card-header">
-            <h3><i class="fas fa-satellite-dish"></i> Real-time Tracking</h3>
-            <span class="badge">4 vehicles</span>
-          </div>
-          <div style="display:flex; gap:20px; align-items:center;">
-            <div><i class="fas fa-truck" style="font-size:2rem; color:#2563eb;"></i></div>
-            <div>
-              <div><strong>MH12 AB 2345</strong> · Feeder Vehicle</div>
-              <div style="font-size:0.8rem; color:#475569;">📍 Mumbai Branch → Hub (32 min)</div>
-              <div><strong>KA05 XY 8891</strong> · Line Haul</div>
-              <div style="font-size:0.8rem; color:#475569;">📍 Hub → Delhi Hub (arriving 4:15 PM)</div>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h3><i class="fas fa-chart-pie"></i> Parcel Status Analytics</h3>
-          </div>
-          <div style="display:flex; justify-content:space-around;">
-            <div><span style="font-weight:700;">✅ Delivered</span><br>78%</div>
-            <div><span style="font-weight:700;">📦 In Transit</span><br>14%</div>
-            <div><span style="font-weight:700;">⚠️ Exception</span><br>5%</div>
-            <div><span style="font-weight:700;">↩️ Return</span><br>3%</div>
-          </div>
-          <div style="margin-top:16px; background:#f1f5f9; height:8px; border-radius:8px; width:100%;">
-            <div style="width:78%; height:8px; background:#16a34a; border-radius:8px;"></div>
-          </div>
-        </div>
+        <div class="card"><h3>📦 Recent Parcels</h3><table><tr><th>UID</th><th>Type</th><th>Bin</th><th>Status</th></tr><tr><td class="barcode-uid">82914</td><td>Fragile</td><td class="bin-tag">A-12</td><td class="status">Stored</td></tr><tr><td class="barcode-uid">67102</td><td>Document</td><td class="bin-tag">B-03</td><td class="status">Stored</td></tr></table></div>
+        <div class="card"><h3>🚚 Live Vehicle Track</h3><div class="map-container" id="miniMap"><div class="vehicle-marker" style="top:40%;left:30%;"><i class="fas fa-truck"></i> MH12</div><div class="vehicle-marker" style="top:60%;left:70%;"><i class="fas fa-shuttle-van"></i> KA05</div></div></div>
       </div>
     </div>
-  </main>
 
-  <script>
-    // Simple interactive script for Xesoid WMS ERP dashboard
-    document.addEventListener('DOMContentLoaded', function() {
-      // Sidebar navigation active state
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-          navItems.forEach(n => n.classList.remove('active'));
-          this.classList.add('active');
-          
-          // Simulate page change (demo only)
-          const moduleName = this.innerText.trim();
-          if (moduleName !== 'Dashboard') {
-            const titleElement = document.querySelector('.page-title h2');
-            if (titleElement) {
-              titleElement.innerText = moduleName + ' Module';
-            }
-            console.log('Navigated to: ' + moduleName);
-          } else {
-            document.querySelector('.page-title h2').innerText = 'Warehouse Command Center';
-          }
-        });
-      });
+    <!-- Booking -->
+    <div class="page-section" id="booking">
+      <div class="page-title"><h2>New Shipment Booking</h2></div>
+      <div class="card">
+        <form id="bookingForm" style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <input placeholder="Sender Name" class="form-input"><input placeholder="Receiver Name" class="form-input">
+          <input placeholder="Origin Branch" class="form-input"><input placeholder="Destination" class="form-input">
+          <select class="form-input"><option>Parcel Type</option><option>Document</option><option>Fragile</option></select>
+          <button type="button" id="createBooking" style="background:#0f172a;color:white;border:none;padding:12px;border-radius:12px;">Book Shipment</button>
+        </form>
+        <table style="margin-top:20px;"><tr><th>ID</th><th>Origin</th><th>Dest</th><th>Status</th></tr><tr><td>BK1001</td><td>Mumbai</td><td>Delhi</td><td class="status">Confirmed</td></tr></table>
+      </div>
+    </div>
 
-      // Barcode scan simulation
-      const barcodeBtn = document.querySelector('.barcode-scan');
-      if (barcodeBtn) {
-        barcodeBtn.addEventListener('click', function() {
-          const fakeUID = Math.floor(10000 + Math.random() * 90000);
-          alert('🔍 Barcode scanned. Parcel UID (last 5): ' + fakeUID + '\nFetching parcel details...');
-          // Simulate search
-          const searchInput = document.querySelector('.search-box input');
-          if (searchInput) {
-            searchInput.value = 'UID-' + fakeUID;
-          }
-        });
-      }
+    <!-- Warehouse -->
+    <div class="page-section" id="warehouse">
+      <div class="page-title"><h2>Warehouse Bin Management</h2></div>
+      <div class="double-panel">
+        <div class="card"><h3>Bin Grid</h3><div id="binGrid" style="display:flex;flex-wrap:wrap;gap:10px;"></div></div>
+        <div class="card"><h3>Inbound Scan</h3><input placeholder="Scan Parcel UID" id="scanParcel" class="form-input"><button id="assignBin" style="margin-top:8px;">Assign to Bin</button><p id="assignMsg"></p></div>
+      </div>
+    </div>
 
-      // Search simulation
-      const searchInput = document.querySelector('.search-box input');
-      if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
-          if (e.key === 'Enter') {
-            alert('🔎 Searching WMS for: ' + this.value);
-          }
-        });
-      }
+    <!-- Tracking -->
+    <div class="page-section" id="tracking">
+      <div class="page-title"><h2>Live Shipment Tracking</h2></div>
+      <div class="map-container" style="height:300px;" id="trackMap"></div>
+      <input placeholder="Enter Tracking ID" id="trackInput" class="form-input" style="width:300px;"><button id="trackBtn">Track</button>
+      <p id="trackResult"></p>
+    </div>
 
-      // Update time dynamically (demo)
-      const badge = document.querySelector('.badge');
-      if (badge) {
-        setInterval(() => {
-          const min = Math.floor(Math.random() * 5) + 1;
-          badge.innerHTML = '<i class="far fa-clock"></i> Last sync: ' + min + ' min ago';
-        }, 15000);
-      }
+    <!-- Vehicles -->
+    <div class="page-section" id="vehicles">
+      <div class="page-title"><h2>Fleet Overview</h2></div>
+      <table><tr><th>Vehicle</th><th>Type</th><th>Route</th><th>Status</th></tr><tr><td>MH12 AB 2345</td><td>Feeder</td><td>Branch→Hub</td><td class="status">Active</td></tr><tr><td>KA05 XY 8891</td><td>Line Haul</td><td>Hub→Delhi</td><td class="status warning">Delayed</td></tr></table>
+    </div>
+
+    <!-- Analytics -->
+    <div class="page-section" id="analytics">
+      <div class="page-title"><h2>Performance Analytics</h2></div>
+      <div class="double-panel">
+        <div class="card"><h3>Delivery Success</h3><div style="height:20px;background:#e2e8f0;border-radius:10px;"><div style="width:78%;height:100%;background:#16a34a;border-radius:10px;"></div></div><p>78% On-Time</p></div>
+        <div class="card"><h3>Parcel Status</h3><div>✅ Delivered 78% | 📦 In Transit 14% | ⚠️ Exception 5% | ↩️ Return 3%</div></div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="page-section" id="settings">
+      <div class="page-title"><h2>System Settings</h2></div>
+      <div class="card"><p>User: Admin | Warehouse: Mumbai Hub | Printer: Zebra ZD420</p><button>Save Config</button></div>
+    </div>
+
+    <!-- Flowchart -->
+    <div class="page-section" id="flowchart">
+      <div class="page-title"><h2>Operational Flow</h2></div>
+      <div class="flow-steps">
+        <div class="step"><i class="fas fa-box"></i> Booking</div><div class="arrow">→</div>
+        <div class="step"><i class="fas fa-truck"></i> Pickup</div><div class="arrow">→</div>
+        <div class="step"><i class="fas fa-warehouse"></i> Inbound WMS</div><div class="arrow">→</div>
+        <div class="step"><i class="fas fa-sort"></i> Sort/Bin</div><div class="arrow">→</div>
+        <div class="step"><i class="fas fa-shipping-fast"></i> Outbound</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  (function() {
+    // Page switching
+    const sections = document.querySelectorAll('.page-section');
+    const navItems = document.querySelectorAll('.nav-item');
+    function showPage(pageId) {
+      sections.forEach(s => s.classList.remove('active-section'));
+      document.getElementById(pageId).classList.add('active-section');
+      navItems.forEach(n => n.classList.remove('active'));
+      document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+    }
+    navItems.forEach(item => {
+      item.addEventListener('click', () => showPage(item.dataset.page));
     });
-  </script>
+
+    // Global search
+    document.getElementById('globalSearch').addEventListener('input', function(e) {
+      const term = e.target.value.toLowerCase();
+      if (term.includes('uid') || term.includes('82914')) alert('Found parcel UID 82914 in Bin A-12');
+      else if (term) console.log('Searching:', term);
+    });
+
+    // Barcode scan simulation
+    document.getElementById('scanTrigger').addEventListener('click', () => {
+      const fakeUID = Math.floor(10000 + Math.random() * 90000);
+      alert(`Barcode scanned. Parcel UID: ${fakeUID}. Assigning to bin...`);
+      document.getElementById('scanParcel') && (document.getElementById('scanParcel').value = fakeUID);
+    });
+
+    // Warehouse bin grid generation
+    const binGrid = document.getElementById('binGrid');
+    if (binGrid) {
+      const bins = ['A-01','A-02','B-01','B-02','C-01','R-01'];
+      bins.forEach(bin => {
+        const div = document.createElement('div');
+        div.className = 'bin-tag';
+        div.style.padding = '12px';
+        div.innerText = bin + (Math.random()>0.5 ? ' (occupied)' : ' (empty)');
+        binGrid.appendChild(div);
+      });
+    }
+
+    // Assign bin button
+    document.getElementById('assignBin')?.addEventListener('click', () => {
+      const uid = document.getElementById('scanParcel').value;
+      document.getElementById('assignMsg').innerText = uid ? `Parcel ${uid} assigned to Bin B-03` : 'Scan a parcel first';
+    });
+
+    // Tracking map simulation
+    const trackMap = document.getElementById('trackMap');
+    if (trackMap) {
+      trackMap.innerHTML = '<div class="vehicle-marker" style="top:20%;left:20%;"><i class="fas fa-truck"></i> WB-123</div><div class="vehicle-marker" style="top:50%;left:60%;"><i class="fas fa-box"></i> In Transit</div>';
+    }
+    document.getElementById('trackBtn')?.addEventListener('click', () => {
+      const id = document.getElementById('trackInput').value;
+      document.getElementById('trackResult').innerText = id ? `Tracking ${id}: Currently at Mumbai Hub, expected delivery tomorrow.` : 'Enter ID';
+    });
+
+    // Booking create
+    document.getElementById('createBooking')?.addEventListener('click', () => {
+      alert('New booking created! Booking ID: BK' + Math.floor(Math.random()*1000));
+    });
+
+    // Mini map update
+    setInterval(() => {
+      const mini = document.getElementById('miniMap');
+      if (mini && document.getElementById('dashboard').classList.contains('active-section')) {
+        const trucks = mini.querySelectorAll('.vehicle-marker');
+        if (trucks.length) {
+          trucks[0].style.left = (20 + Math.random()*20) + '%';
+          trucks[1].style.left = (50 + Math.random()*30) + '%';
+        }
+      }
+    }, 4000);
+  })();
+</script>
 </body>
 </html>
-```
