@@ -1,362 +1,635 @@
+This is a complete HTML/CSS/JavaScript document for the Xesoid WMS ERP dashboard. You can run it directly in your browser.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Xesoid WMS ERP | Smart Logistics & Warehouse Management</title>
+  <!-- Font Awesome 6 for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <title>Xesoid WMS ERP</title>
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+      background: #f4f6fb;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      color: #1e293b;
+    }
 
-  <link rel="stylesheet" href="style.css" />
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 260px;
+      background: #0f172a;
+      color: #cbd5e1;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.08);
+      transition: width 0.2s;
+    }
+
+    .sidebar-header {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
+    }
+
+    .logo i {
+      color: #3b82f6;
+      font-size: 2rem;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, #ffffff, #e2e8f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 12px;
+      overflow-y: auto;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      transition: all 0.2s;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-item i {
+      width: 22px;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .nav-item.active {
+      background: #1e293b;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      font-weight: 600;
+    }
+
+    .nav-item.active i {
+      color: #3b82f6;
+    }
+
+    .nav-item:hover:not(.active) {
+      background: #1e293b80;
+      color: #e2e8f0;
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid #1e293b;
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: #f8fafc;
+    }
+
+    /* top bar */
+    .topbar {
+      background: white;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      background: #f1f5f9;
+      border-radius: 24px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 320px;
+      border: 1px solid #e2e8f0;
+      transition: 0.2s;
+    }
+
+    .search-box i {
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 0.9rem;
+      color: #1e293b;
+    }
+
+    .search-box:focus-within {
+      border-color: #3b82f6;
+      background: white;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .barcode-scan {
+      background: #0f172a;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .barcode-scan:hover {
+      background: #1e293b;
+    }
+
+    .user-icon {
+      font-size: 1.8rem;
+      color: #334155;
+      cursor: pointer;
+    }
+
+    /* page content */
+    .content {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .page-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-title h2 {
+      font-weight: 600;
+      font-size: 1.8rem;
+      color: #0f172a;
+    }
+
+    .badge {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    /* stat cards */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #f1f5f9;
+    }
+
+    .stat-info h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    .stat-info h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .stat-icon {
+      font-size: 2.2rem;
+      color: #3b82f6;
+      opacity: 0.8;
+    }
+
+    /* tables & workflow */
+    .double-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+      border: 1px solid #edf2f7;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .card-header h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #1e293b;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 4px;
+      color: #64748b;
+      font-weight: 500;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    td {
+      padding: 10px 4px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    .status {
+      background: #dcfce7;
+      color: #166534;
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.7rem;
+    }
+
+    .status.warning {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .barcode-uid {
+      font-family: monospace;
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .flow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+
+    .step {
+      text-align: center;
+      background: #f8fafc;
+      padding: 12px 8px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      flex: 1;
+      margin: 0 4px;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+
+    .step i {
+      display: block;
+      font-size: 1.3rem;
+      margin-bottom: 6px;
+      color: #3b82f6;
+    }
+
+    .arrow {
+      color: #94a3b8;
+      font-size: 1.2rem;
+    }
+
+    .bin-tag {
+      background: #e0e7ff;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 1000px) {
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .double-panel {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        width: 90px;
+      }
+      .sidebar .nav-item span,
+      .sidebar .logo span,
+      .sidebar-footer span {
+        display: none;
+      }
+      .sidebar .logo i {
+        margin: 0 auto;
+      }
+      .nav-item {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
-  <!-- Sidebar -->
-
-  <div class="sidebar">
-
-    <div class="logo">
-      Xesoid WMS
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-cubes"></i>
+        <span>Xesoid WMS</span>
+      </div>
     </div>
+    <div class="sidebar-nav">
+      <div class="nav-item active"><i class="fas fa-th-large"></i> <span>Dashboard</span></div>
+      <div class="nav-item"><i class="fas fa-calendar-plus"></i> <span>Booking</span></div>
+      <div class="nav-item"><i class="fas fa-truck"></i> <span>Pickup Mgmt</span></div>
+      <div class="nav-item"><i class="fas fa-warehouse"></i> <span>Warehouse</span></div>
+      <div class="nav-item"><i class="fas fa-shipping-fast"></i> <span>Delivery</span></div>
+      <div class="nav-item"><i class="fas fa-map-marker-alt"></i> <span>Vehicle Track</span></div>
+      <div class="nav-item"><i class="fas fa-id-card"></i> <span>Drivers</span></div>
+      <div class="nav-item"><i class="fas fa-chart-line"></i> <span>Analytics</span></div>
+      <div class="nav-item"><i class="fas fa-file-invoice"></i> <span>Reports</span></div>
+      <div class="nav-item"><i class="fas fa-file-invoice-dollar"></i> <span>Invoice</span></div>
+      <div class="nav-item"><i class="fas fa-building"></i> <span>Vendors</span></div>
+      <div class="nav-item"><i class="fas fa-users"></i> <span>Customers</span></div>
+      <div class="nav-item"><i class="fas fa-cog"></i> <span>Settings</span></div>
+      <div class="nav-item"><i class="fas fa-project-diagram"></i> <span>Flowchart</span></div>
+    </div>
+    <div class="sidebar-footer">
+      <i class="fas fa-circle text-green-400" style="color: #22c55e;"></i> <span>WMS v1.0 · Online</span>
+    </div>
+  </aside>
 
-    <button onclick="showPage('dashboard')">
-      Dashboard
-    </button>
-
-    <button onclick="showPage('booking')">
-      Booking
-    </button>
-
-    <button onclick="showPage('warehouse')">
-      Warehouse
-    </button>
-
-    <button onclick="showPage('tracking')">
-      Tracking
-    </button>
-
-    <button onclick="showPage('vehicles')">
-      Vehicles
-    </button>
-
-    <button onclick="showPage('analytics')">
-      Analytics
-    </button>
-
-    <button onclick="showPage('settings')">
-      Settings
-    </button>
-
-  </div>
-
-  <!-- Main -->
-
-  <div class="main">
-
-    <!-- Topbar -->
-
+  <!-- Main Dashboard -->
+  <main class="main">
     <div class="topbar">
-
-      <input
-        type="text"
-        placeholder="Search Consignment / Barcode"
-      />
-
-      <div class="top-right">
-        Kochi Branch
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search parcel, bin, driver, UID...">
       </div>
-
+      <div class="topbar-actions">
+        <div class="barcode-scan">
+          <i class="fas fa-barcode"></i> Scan Barcode
+        </div>
+        <div class="user-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+      </div>
     </div>
 
-    <!-- Dashboard -->
-
-    <section id="dashboard" class="page active">
-
-      <h1>Dashboard</h1>
-
-      <div class="cards">
-
-        <div class="card">
-          <h3>Total Shipments</h3>
-          <p>12,450</p>
-        </div>
-
-        <div class="card">
-          <h3>Pending Deliveries</h3>
-          <p>430</p>
-        </div>
-
-        <div class="card">
-          <h3>Warehouse Alerts</h3>
-          <p>21</p>
-        </div>
-
-        <div class="card">
-          <h3>Vehicles Active</h3>
-          <p>182</p>
-        </div>
-
+    <div class="content">
+      <div class="page-title">
+        <h2>Warehouse Command Center</h2>
+        <span class="badge"><i class="far fa-clock"></i> Last sync: 2 min ago</span>
       </div>
 
-      <div class="table-box">
-
-        <table>
-
-          <tr>
-            <th>Consignment</th>
-            <th>Status</th>
-            <th>Location</th>
-            <th>Branch</th>
-          </tr>
-
-          <tr>
-            <td>4036259485</td>
-            <td>Reached Cochin</td>
-            <td>ERL Hub</td>
-            <td>Kochi</td>
-          </tr>
-
-          <tr>
-            <td>4036259486</td>
-            <td>Out For Delivery</td>
-            <td>VX Delivery</td>
-            <td>Palakkad</td>
-          </tr>
-
-          <tr>
-            <td>4036259487</td>
-            <td>Inbound WMS</td>
-            <td>Warehouse</td>
-            <td>Coimbatore</td>
-          </tr>
-
-        </table>
-
+      <!-- Stats -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Inbound Today</h4>
+            <h3>1,284</h3>
+            <small style="color:#16a34a;">+12% vs yesterday</small>
+          </div>
+          <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Outbound (POD)</h4>
+            <h3>942</h3>
+            <small>98.3% delivered</small>
+          </div>
+          <div class="stat-icon"><i class="fas fa-truck-loading"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Active Bins</h4>
+            <h3>48/64</h3>
+            <small>75% utilization</small>
+          </div>
+          <div class="stat-icon"><i class="fas fa-th"></i></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-info">
+            <h4>Feeder Trips</h4>
+            <h3>7 active</h3>
+            <small>Branch→Hub</small>
+          </div>
+          <div class="stat-icon"><i class="fas fa-route"></i></div>
+        </div>
       </div>
 
-    </section>
+      <!-- Double panel: Warehouse bins & Recent parcels -->
+      <div class="double-panel">
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-warehouse" style="margin-right: 8px;"></i>Bin Assignment (Inbound)</h3>
+            <span class="badge">Barcode UID</span>
+          </div>
+          <table>
+            <thead>
+              <tr><th>Parcel UID</th><th>Type</th><th>Bin</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="barcode-uid">82914</span></td><td>Fragile</td><td><span class="bin-tag">A-12</span></td><td><span class="status">Stored</span></td></tr>
+              <tr><td><span class="barcode-uid">67102</span></td><td>Document</td><td><span class="bin-tag">B-03</span></td><td><span class="status">Stored</span></td></tr>
+              <tr><td><span class="barcode-uid">45321</span></td><td>Electronics</td><td><span class="bin-tag">C-09</span></td><td><span class="status warning">Misplaced</span></td></tr>
+              <tr><td><span class="barcode-uid">90234</span></td><td>Standard</td><td><span class="bin-tag">A-01</span></td><td><span class="status">Stored</span></td></tr>
+              <tr><td><span class="barcode-uid">11876</span></td><td>Return</td><td><span class="bin-tag">R-04</span></td><td><span class="status warning">Damaged</span></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 12px; color: #3b82f6; font-size:0.8rem;"><i class="fas fa-qrcode"></i> Last 5 digits = UID identifier</div>
+        </div>
 
-    <!-- Booking -->
-
-    <section id="booking" class="page">
-
-      <h1>Booking Management</h1>
-
-      <div class="table-box">
-
-        <table>
-
-          <tr>
-            <th>Docket</th>
-            <th>Consignor</th>
-            <th>Consignee</th>
-            <th>Weight</th>
-            <th>Status</th>
-          </tr>
-
-          <tr>
-            <td>764245565</td>
-            <td>Grand Speed</td>
-            <td>ICICI</td>
-            <td>5 KG</td>
-            <td>Booked</td>
-          </tr>
-
-          <tr>
-            <td>500287492</td>
-            <td>Ship Shyam</td>
-            <td>Kona Interiors</td>
-            <td>10 KG</td>
-            <td>Transit</td>
-          </tr>
-
-        </table>
-
+        <div class="card">
+          <div class="card-header">
+            <h3><i class="fas fa-exchange-alt"></i> Line Haul / Feeder Flow</h3>
+          </div>
+          <div class="flow-steps">
+            <div class="step"><i class="fas fa-store"></i> Branch</div>
+            <div class="arrow">→</div>
+            <div class="step"><i class="fas fa-truck"></i> Feeder</div>
+            <div class="arrow">→</div>
+            <div class="step"><i class="fas fa-building"></i> Hub</div>
+            <div class="arrow">→</div>
+            <div class="step"><i class="fas fa-truck-moving"></i> Line Haul</div>
+          </div>
+          <div style="margin-top: 16px;">
+            <p style="font-weight:600; margin-bottom:6px;">📦 Pickup Request → Inbound WMS</p>
+            <table>
+              <thead><tr><th>Driver</th><th>Pickup</th><th>POD</th></tr></thead>
+              <tbody>
+                <tr><td>Rajesh K.</td><td>#PU-231</td><td><span class="status">Signed</span></td></tr>
+                <tr><td>Ankit S.</td><td>#PU-245</td><td><span class="status warning">Pending</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
-    </section>
-
-    <!-- Warehouse -->
-
-    <section id="warehouse" class="page">
-
-      <h1>Warehouse Management</h1>
-
-      <div class="cards">
-
-        <div class="card red">
-          <h3>Misplaced Parcels</h3>
-          <p>8</p>
-        </div>
-
+      <!-- Tracking & Analytics preview -->
+      <div class="double-panel">
         <div class="card">
-          <h3>Total Bins</h3>
-          <p>542</p>
+          <div class="card-header">
+            <h3><i class="fas fa-satellite-dish"></i> Real-time Tracking</h3>
+            <span class="badge">4 vehicles</span>
+          </div>
+          <div style="display:flex; gap:20px; align-items:center;">
+            <div><i class="fas fa-truck" style="font-size:2rem; color:#2563eb;"></i></div>
+            <div>
+              <div><strong>MH12 AB 2345</strong> · Feeder Vehicle</div>
+              <div style="font-size:0.8rem; color:#475569;">📍 Mumbai Branch → Hub (32 min)</div>
+              <div><strong>KA05 XY 8891</strong> · Line Haul</div>
+              <div style="font-size:0.8rem; color:#475569;">📍 Hub → Delhi Hub (arriving 4:15 PM)</div>
+            </div>
+          </div>
         </div>
-
         <div class="card">
-          <h3>Inbound Today</h3>
-          <p>1,204</p>
+          <div class="card-header">
+            <h3><i class="fas fa-chart-pie"></i> Parcel Status Analytics</h3>
+          </div>
+          <div style="display:flex; justify-content:space-around;">
+            <div><span style="font-weight:700;">✅ Delivered</span><br>78%</div>
+            <div><span style="font-weight:700;">📦 In Transit</span><br>14%</div>
+            <div><span style="font-weight:700;">⚠️ Exception</span><br>5%</div>
+            <div><span style="font-weight:700;">↩️ Return</span><br>3%</div>
+          </div>
+          <div style="margin-top:16px; background:#f1f5f9; height:8px; border-radius:8px; width:100%;">
+            <div style="width:78%; height:8px; background:#16a34a; border-radius:8px;"></div>
+          </div>
         </div>
-
       </div>
+    </div>
+  </main>
 
-      <div class="table-box">
+  <script>
+    // Simple interactive script for Xesoid WMS ERP dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+      // Sidebar navigation active state
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+          navItems.forEach(n => n.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Simulate page change (demo only)
+          const moduleName = this.innerText.trim();
+          if (moduleName !== 'Dashboard') {
+            const titleElement = document.querySelector('.page-title h2');
+            if (titleElement) {
+              titleElement.innerText = moduleName + ' Module';
+            }
+            console.log('Navigated to: ' + moduleName);
+          } else {
+            document.querySelector('.page-title h2').innerText = 'Warehouse Command Center';
+          }
+        });
+      });
 
-        <table>
+      // Barcode scan simulation
+      const barcodeBtn = document.querySelector('.barcode-scan');
+      if (barcodeBtn) {
+        barcodeBtn.addEventListener('click', function() {
+          const fakeUID = Math.floor(10000 + Math.random() * 90000);
+          alert('🔍 Barcode scanned. Parcel UID (last 5): ' + fakeUID + '\nFetching parcel details...');
+          // Simulate search
+          const searchInput = document.querySelector('.search-box input');
+          if (searchInput) {
+            searchInput.value = 'UID-' + fakeUID;
+          }
+        });
+      }
 
-          <tr>
-            <th>Parcel UID</th>
-            <th>Bin</th>
-            <th>Status</th>
-            <th>Warning</th>
-          </tr>
+      // Search simulation
+      const searchInput = document.querySelector('.search-box input');
+      if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            alert('🔎 Searching WMS for: ' + this.value);
+          }
+        });
+      }
 
-          <tr>
-            <td>89432</td>
-            <td>B-12-A</td>
-            <td>Stored</td>
-            <td>No</td>
-          </tr>
-
-          <tr>
-            <td>89433</td>
-            <td>B-10-C</td>
-            <td>Missing</td>
-            <td>Wrong Placement</td>
-          </tr>
-
-        </table>
-
-      </div>
-
-    </section>
-
-    <!-- Tracking -->
-
-    <section id="tracking" class="page">
-
-      <h1>Live Tracking</h1>
-
-      <div class="tracking-box">
-
-        <div class="step active-step">
-          Pickup Completed
-        </div>
-
-        <div class="line"></div>
-
-        <div class="step active-step">
-          Hub Processing
-        </div>
-
-        <div class="line"></div>
-
-        <div class="step">
-          Out For Delivery
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- Vehicles -->
-
-    <section id="vehicles" class="page">
-
-      <h1>Vehicle Operations</h1>
-
-      <div class="table-box">
-
-        <table>
-
-          <tr>
-            <th>Vehicle</th>
-            <th>Driver</th>
-            <th>Route</th>
-            <th>Status</th>
-          </tr>
-
-          <tr>
-            <td>KL09AB4582</td>
-            <td>Arjun</td>
-            <td>Kochi → Palakkad</td>
-            <td>Running</td>
-          </tr>
-
-          <tr>
-            <td>TN38DK2201</td>
-            <td>Rahul</td>
-            <td>Hub Transfer</td>
-            <td>Loading</td>
-          </tr>
-
-        </table>
-
-      </div>
-
-    </section>
-
-    <!-- Analytics -->
-
-    <section id="analytics" class="page">
-
-      <h1>Analytics</h1>
-
-      <div class="cards">
-
-        <div class="card">
-          <h3>Delivery Accuracy</h3>
-          <p>95%</p>
-        </div>
-
-        <div class="card">
-          <h3>Warehouse Efficiency</h3>
-          <p>88%</p>
-        </div>
-
-        <div class="card">
-          <h3>Branch Performance</h3>
-          <p>92%</p>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- Settings -->
-
-    <section id="settings" class="page">
-
-      <h1>Settings</h1>
-
-      <div class="cards">
-
-        <div class="card">
-          Corporate Settings
-        </div>
-
-        <div class="card">
-          Customer Management
-        </div>
-
-        <div class="card">
-          Vendor Settings
-        </div>
-
-        <div class="card">
-          User Accounts
-        </div>
-
-      </div>
-
-    </section>
-
-  </div>
-
-  <script src="script.js"></script>
-
+      // Update time dynamically (demo)
+      const badge = document.querySelector('.badge');
+      if (badge) {
+        setInterval(() => {
+          const min = Math.floor(Math.random() * 5) + 1;
+          badge.innerHTML = '<i class="far fa-clock"></i> Last sync: ' + min + ' min ago';
+        }, 15000);
+      }
+    });
+  </script>
 </body>
-
 </html>
+```
