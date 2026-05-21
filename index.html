@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Xesoid WMS</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+
+  <div class="sidebar">
+
+    <h1>Xesoid WMS</h1>
+
+    <button onclick="showPage('dashboard')">Dashboard</button>
+    <button onclick="showPage('flowchart')">Flowchart</button>
+    <button onclick="showPage('warehouse')">Warehouse</button>
+    <button onclick="showPage('deliveries')">Deliveries</button>
+    <button onclick="showPage('vehicles')">Vehicles</button>
+    <button onclick="showPage('analytics')">Analytics</button>
+    <button onclick="showPage('settings')">Settings</button>
+
+  </div>
+
+  <!-- Main Content -->
+
+  <div class="main">
+
+    <!-- Dashboard -->
+
+    <section id="dashboard" class="page active">
+
+      <h2>Dashboard</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Total Shipments</h3>
+          <p>12,450</p>
+        </div>
+
+        <div class="card">
+          <h3>Pending Deliveries</h3>
+          <p>430</p>
+        </div>
+
+        <div class="card">
+          <h3>Warehouse Alerts</h3>
+          <p>21</p>
+        </div>
+
+        <div class="card">
+          <h3>Vehicles Active</h3>
+          <p>182</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Flowchart -->
+
+    <section id="flowchart" class="page">
+
+      <h2>Operational Flowchart</h2>
+
+      <div class="flow">
+
+        <div class="flow-box">Customer Pickup Request</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Pickup Team Assignment</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Parcel Barcode Generation</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Inbound to WMS</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Bin Allocation</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Feeder Trip</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Hub Processing</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Outbound to WMS</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Delivery Assignment</div>
+        <div class="arrow">↓</div>
+
+        <div class="flow-box">Final Delivery + POD Upload</div>
+
+      </div>
+
+    </section>
+
+    <!-- Warehouse -->
+
+    <section id="warehouse" class="page">
+
+      <h2>Warehouse Management</h2>
+
+      <input type="text" placeholder="Search Parcel Barcode">
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Parcel UID</h3>
+          <p>89432</p>
+        </div>
+
+        <div class="card">
+          <h3>Bin Location</h3>
+          <p>B-12-A</p>
+        </div>
+
+        <div class="card red">
+          <h3>Warning</h3>
+          <p>Parcel Misplaced</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Deliveries -->
+
+    <section id="deliveries" class="page">
+
+      <h2>Deliveries</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          Shipment #XW1023 - Out For Delivery
+        </div>
+
+        <div class="card">
+          Shipment #XW1024 - Delivered
+        </div>
+
+        <div class="card">
+          Shipment #XW1025 - Delayed
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Vehicles -->
+
+    <section id="vehicles" class="page">
+
+      <h2>Vehicle Tracking</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          KL 09 AB 4582 - Active Route
+        </div>
+
+        <div class="card">
+          TN 38 DK 2201 - Hub Transfer
+        </div>
+
+        <div class="card">
+          KL 07 MM 9999 - Maintenance
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Analytics -->
+
+    <section id="analytics" class="page">
+
+      <h2>Analytics Dashboard</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Branch Performance</h3>
+          <p>92%</p>
+        </div>
+
+        <div class="card">
+          <h3>Warehouse Efficiency</h3>
+          <p>88%</p>
+        </div>
+
+        <div class="card">
+          <h3>Delivery Accuracy</h3>
+          <p>95%</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Settings -->
+
+    <section id="settings" class="page">
+
+      <h2>Settings</h2>
+
+      <div class="cards">
+
+        <div class="card">Corporate Settings</div>
+        <div class="card">Customer Management</div>
+        <div class="card">Vendor Management</div>
+        <div class="card">User Accounts</div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
