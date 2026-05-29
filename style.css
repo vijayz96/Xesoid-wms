@@ -18,7 +18,6 @@ body {
 .hero-container {
     width: 100%;
     min-height: 100vh;
-    /* Deep gradient to simulate the top-to-bottom dark sky layout from your image */
     background: linear-gradient(to bottom, rgba(10, 15, 30, 0.85), rgba(15, 23, 42, 0.95)), 
                 url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
@@ -35,64 +34,43 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 8%;
-    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px 4%;
+    background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .logo {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     letter-spacing: 1px;
+    white-space: nowrap;
+    margin-right: 20px;
 }
 
 .highlight {
     color: #ff7300; /* Vibrant orange matching your reference image */
 }
 
+.nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 18px;
+}
+
 .nav-menu a {
     text-decoration: none;
     color: #ffffff;
     font-weight: 600;
-    font-size: 14px;
-    margin-left: 35px;
-    letter-spacing: 1px;
+    font-size: 11px; /* Slightly smaller to fit all 12 elements perfectly */
+    letter-spacing: 0.5px;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover, .nav-menu a.active {
     color: #ff7300;
-}
-
-/* Search bar styling inside headers */
-.search-box {
-    display: flex;
-    align-items: center;
-}
-
-.search-box input {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 10px 15px;
-    border-radius: 4px 0 0 4px;
-    color: #ffffff;
-    outline: none;
-    width: 200px;
-}
-
-.search-box button {
-    background-color: #ff7300;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-weight: 600;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.search-box button:hover {
-    background-color: #e06500;
 }
 
 /* ==========================================
@@ -103,8 +81,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 8%;
+    padding: 40px 8%;
     width: 100%;
+    gap: 40px;
 }
 
 /* Left side typography content */
@@ -113,14 +92,14 @@ body {
 }
 
 .main-heading {
-    font-size: 50px;
+    font-size: 48px;
     line-height: 1.2;
     margin-bottom: 20px;
     font-weight: 700;
 }
 
 .sub-heading {
-    font-size: 16px;
+    font-size: 15px;
     color: #cccccc;
     line-height: 1.6;
     margin-bottom: 35px;
@@ -148,6 +127,7 @@ body {
    ========================================== */
 .login-card-container {
     width: 380px;
+    flex-shrink: 0;
 }
 
 .login-card {
@@ -245,24 +225,25 @@ body {
     transform: scale(1.2);
 }
 
-/* Responsive adjustment for mid-size tablet layouts */
-@media (max-width: 992px) {
-    .content-wrapper {
-        flex-direction: column;
-        padding: 5px 5%;
-        text-align: center;
-        gap: 50px;
-    }
-    .hero-text-section {
-        max-width: 100%;
-        margin-top: 40px;
-    }
+/* Responsive breakpoint handling */
+@media (max-width: 1200px) {
     .navbar {
         flex-direction: column;
         gap: 15px;
-        padding: 20px;
+        text-align: center;
     }
-    .nav-menu a {
-        margin: 0 15px;
+    .nav-menu {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .content-wrapper {
+        flex-direction: column;
+        padding: 40px 5%;
+        text-align: center;
+    }
+    .hero-text-section {
+        max-width: 100%;
     }
 }
