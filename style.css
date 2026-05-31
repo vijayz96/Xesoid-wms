@@ -1,4 +1,8 @@
-/* Reset basic margins and setup clean font styling */
+/* ==========================================================================
+   XESOID PLATFORM MASTER STYLESHEET
+   ========================================================================== */
+
+/* 1. Global Resets & Typography */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +10,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Base structural layout container with a dark night/reflective aesthetic background */
 body {
     background-color: #0b111e;
     color: #ffffff;
@@ -14,12 +17,13 @@ body {
     overflow-x: hidden;
 }
 
-/* Main background wrapper mimicking the landscape horizon layout */
+/* 2. Responsive Hero Background Container */
 .hero-container {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(to bottom, rgba(10, 15, 30, 0.85), rgba(15, 23, 42, 0.95)), 
-                url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+    /* Clean linear dark gradient over a high-tech logistics horizon graphic */
+    background: linear-gradient(to bottom, rgba(10, 15, 30, 0.9), rgba(15, 23, 42, 0.95)), 
+                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -27,17 +31,15 @@ body {
     flex-direction: column;
 }
 
-/* ==========================================
-   1. TOP NAVIGATION BAR STYLES
-   ========================================== */
+/* 3. Top Navigation Bar System */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 4%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 6%;
+    background-color: rgba(5, 5, 10, 0.7);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo {
@@ -45,62 +47,61 @@ body {
     font-weight: 700;
     letter-spacing: 1px;
     white-space: nowrap;
-    margin-right: 20px;
 }
 
 .highlight {
-    color: #ff7300; /* Vibrant orange matching your reference image */
+    color: #ff7300; /* Signature theme orange color */
 }
 
 .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 18px;
+    align-items: center;
+    gap: 20px;
 }
 
 .nav-menu a {
     text-decoration: none;
-    color: #ffffff;
+    color: #cccccc;
     font-weight: 600;
-    font-size: 11px; /* Slightly smaller to fit all 12 elements perfectly */
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
+    font-size: 12px;
+    letter-spacing: 0.8px;
+    transition: all 0.3s ease;
     white-space: nowrap;
+    text-transform: uppercase;
 }
 
 .nav-menu a:hover, .nav-menu a.active {
     color: #ff7300;
 }
 
-/* ==========================================
-   2. MAIN HERO CONTENT AREA STYLES
-   ========================================== */
+/* 4. Split Hero Content Layout */
 .content-wrapper {
     flex: 1;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 40px 8%;
+    padding: 60px 8%;
     width: 100%;
-    gap: 40px;
+    gap: 50px;
 }
 
-/* Left side typography content */
+/* Left Panel Typography */
 .hero-text-section {
     max-width: 55%;
 }
 
 .main-heading {
-    font-size: 48px;
-    line-height: 1.2;
+    font-size: 52px;
+    line-height: 1.15;
     margin-bottom: 20px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 .sub-heading {
-    font-size: 15px;
-    color: #cccccc;
+    font-size: 16px;
+    color: #abb7c5;
     line-height: 1.6;
     margin-bottom: 35px;
 }
@@ -110,11 +111,12 @@ body {
     text-decoration: none;
     background-color: #ff7300;
     color: #ffffff;
-    padding: 14px 40px;
-    border-radius: 5px;
+    padding: 14px 45px;
+    border-radius: 6px;
     font-weight: 700;
-    letter-spacing: 1px;
-    transition: background 0.3s, transform 0.2s;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 115, 0, 0.3);
 }
 
 .btn-join:hover {
@@ -122,128 +124,100 @@ body {
     transform: translateY(-2px);
 }
 
-/* ==========================================
-   3. RIGHT SIDE LOGIN CARD STYLES
-   ========================================== */
+/* 5. Right-Pinned Authentication Cards */
 .login-card-container {
-    width: 380px;
+    width: 400px;
     flex-shrink: 0;
 }
 
 .login-card {
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(10, 11, 14, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px 30px;
-    border-radius: 12px;
+    padding: 45px 35px;
+    border-radius: 14px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
 }
 
 .login-card h2 {
-    color: #ff7300;
-    font-size: 24px;
-    margin-bottom: 30px;
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 35px;
     font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-/* Input Fields styling */
+/* Custom Borderless Forms with Underlines */
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    position: relative;
 }
 
 .input-group input {
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 1px solid #ffffff;
-    padding: 12px 5px;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 8px;
     color: #ffffff;
     font-size: 15px;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
 }
 
 .input-group input:focus {
     border-bottom-color: #ff7300;
 }
 
+/* Card Submit Buttons */
 .btn-login {
     width: 100%;
     background-color: #ff7300;
     color: white;
     border: none;
-    padding: 12px;
+    padding: 14px;
     font-size: 16px;
     font-weight: 700;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     margin-top: 15px;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 115, 0, 0.2);
 }
 
 .btn-login:hover {
     background-color: #e06500;
 }
 
-.signup-redirect {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.signup-redirect a {
-    color: #ff7300;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* Social Icon Section Styles */
-.social-login-section {
-    margin-top: 35px;
-}
-
-.social-login-section p {
-    font-size: 13px;
-    color: #888888;
-    margin-bottom: 15px;
-}
-
-.social-icons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.social-icons a {
-    color: #ffffff;
-    font-size: 18px;
-    transition: color 0.2s, transform 0.2s;
-}
-
-.social-icons a:hover {
-    color: #ff7300;
-    transform: scale(1.2);
-}
-
-/* Responsive breakpoint handling */
+/* 6. Breakpoints for Tablet & Mobile Support */
 @media (max-width: 1200px) {
     .navbar {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        padding: 20px;
     }
     .nav-menu {
         justify-content: center;
+        gap: 14px;
+    }
+    .main-heading {
+        font-size: 40px;
     }
 }
 
 @media (max-width: 992px) {
     .content-wrapper {
         flex-direction: column;
-        padding: 40px 5%;
+        padding: 40px 6%;
         text-align: center;
     }
     .hero-text-section {
         max-width: 100%;
+    }
+    .login-card-container {
+        width: 100%;
+        max-width: 420px;
     }
 }
