@@ -20,17 +20,16 @@
     <div class="hero-container">
         <header class="navbar">
             <div class="logo">Xesoid <span class="highlight">Enterprise Gate</span></div>
-            <nav class="nav-menu"><a href="#" id="logoutBtn">LOGOUT</a></nav>
         </header>
 
         <main class="portal-wrapper">
-            <div class="portal-box" onclick="window.location.href='trackzpot-auth.html'">
+            <div class="portal-box" onclick="window.location.href='trackzpot-dashboard.html'">
                 <h3>Trackzpot Portal</h3>
-                <p>Access primary operations including bookings, invoices, driver schedules, service listings, and data reports.</p>
+                <p>Access primary operations including bookings, dockets, invoices, driver schedules, and logistics data reports.</p>
                 <span class="portal-btn">ENTER TRACKZPOT</span>
             </div>
 
-            <div class="portal-box" onclick="window.location.href='wms-auth.html'">
+            <div class="portal-box" onclick="window.location.href='wms-dashboard.html'">
                 <h3>Execute (WMS) Terminal</h3>
                 <p>Run specialized warehouse activities including storage allocation maps, scanning engines, putaway, and inbound actions.</p>
                 <span class="portal-btn">ENTER WMS EXECUTION</span>
@@ -38,16 +37,5 @@
         </main>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script>
-        // Reuse same credentials block configuration
-        const firebaseConfig = { projectId: "xesoid-wms" }; 
-        if (!firebase.apps.length) firebase.initializeApp({apiKey: "YOUR_API_KEY", authDomain: "xesoid-wms.firebaseapp.com"});
-        
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            firebase.auth().signOut().then(() => { window.location.href = "index.html"; });
-        });
-    </script>
 </body>
 </html>
