@@ -100,13 +100,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
+<!-- Include Firebase Core and Database SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
 <script>
-    // Your exact Firebase configuration credentials
+    // Your exact Firebase config from Screenshot_2026-05-31-22-06-10-384_com.android.chrome.jpg
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY", // Replace with your real Firebase API Key
+        apiKey: "AIzaSyBffzzeiU6mwm2mg1QzcXvXRs1XP1ikk-4",
         authDomain: "xesoid-wms.firebaseapp.com",
         databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
-        projectId: "xesoid-wms"
+        projectId: "xesoid-wms",
+        storageBucket: "xesoid-wms.appspot.com",
+        messagingSenderId: "331402984810",
+        appId: "1:331402984810:web:2fcabbd085826d709f913",
+        measurementId: "G-R33XEZ29NX"
     };
     
     // Initialize Firebase
@@ -117,17 +125,15 @@
     document.getElementById('pickupForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Grab values entered by the customer
         const origin = document.getElementById('origin').value;
         const destination = document.getElementById('dest').value;
         const weight = document.getElementById('weight').value;
         const boxType = document.getElementById('boxType').value;
         const timestamp = Date.now();
 
-        // Create a unique booking reference ID automatically
+        // Create a unique node inside Firebase
         const newBookingRef = database.ref('customer_requests').push();
         
-        // Structure the data layout
         const requestData = {
             id: newBookingRef.key,
             origin: origin,
@@ -138,16 +144,14 @@
             submitted_at: timestamp
         };
 
-        // Push data straight to your Firebase cloud tree
+        // Send data directly to the cloud
         newBookingRef.set(requestData)
             .then(() => {
                 alert(`Success! Request logged with ID: ${newBookingRef.key}`);
-                // Clear the input fields for the next entry
                 document.getElementById('pickupForm').reset();
             })
             .catch((error) => {
-                alert("Error sending data to Firebase: " + error.message);
-                console.error(error);
+                alert("Error: " + error.message);
             });
     });
 </script>
