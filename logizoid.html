@@ -3,158 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logizoid - Customer Dashboard</title>
+    <title>Logizoid - Advanced Client Terminal</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .client-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding: 40px 6%; flex: 1; width:100%; }
-        .form-panel { background: rgba(0,0,0,0.8); padding: 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); height: fit-content; }
-        .form-panel h2 { font-size: 24px; color: #ff7300; margin-bottom: 25px; font-weight: 700; }
+        .mega-layout { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 30px; padding: 30px 4%; flex: 1; width:100%; }
+        .booking-sheet { background: rgba(10, 15, 30, 0.9); padding: 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+        .booking-sheet h2 { font-size: 22px; color: #ff7300; margin-bottom: 25px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
+        .section-title { font-size: 14px; color: #00ff66; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px 0; font-weight: bold;}
         
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
-        .input-box { display: flex; flex-direction: column; }
-        .input-box label { font-size: 12px; color: #aaa; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
-        .input-box input, .input-box select { 
-            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.15); 
-            padding: 12px; color: white; border-radius: 6px; font-size: 14px; outline: none;
+        .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .input-block { display: flex; flex-direction: column; }
+        .input-block label { font-size: 11px; color: #aaa; margin-bottom: 5px; font-weight: 600; text-transform: uppercase; }
+        .input-block input, .input-block select, .input-block textarea { 
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); 
+            padding: 10px; color: white; border-radius: 5px; font-size: 13px; outline: none;
         }
-        .input-box input:focus { border-color: #ff7300; }
+        .input-block input:focus, .input-block select:focus { border-color: #ff7300; background: rgba(255,255,255,0.06); }
 
-        .tracking-status-panel { background: rgba(5,10,20,0.5); padding: 35px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); }
-        .track-card { background: rgba(255,255,255,0.02); border-left: 4px solid #ff7300; padding: 20px; border-radius: 6px; margin-top: 15px; }
-        .track-timeline { display: flex; justify-content: space-between; margin-top: 15px; font-size: 11px; color: #aaa; position: relative;}
-        .step { text-align: center; width: 25%; position: relative; }
-        .step.done { color: #ff7300; font-weight: bold; }
+        .side-panel { display: flex; flex-direction: column; gap: 25px; }
+        .calculator-box { background: linear-gradient(135deg, rgba(25ying, 115, 0, 0.15), rgba(0,0,0,0.8)); padding: 30px; border-radius: 12px; border: 2px solid #ff7300; text-align: center; }
+        .price-display { font-size: 42px; font-weight: 900; color: #00ff66; margin: 15px 0; font-family: monospace; }
+        
+        .history-box { background: rgba(0,0,0,0.6); padding: 25px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); flex: 1; }
+        .mini-card { background: rgba(255,255,255,0.02); padding: 12px; border-radius: 6px; margin-bottom: 10px; border-left: 3px solid #ff7300; font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div class="hero-container">
         <header class="navbar">
-            <div class="logo">Logi<span class="highlight">zoid Client Hub</span></div>
+            <div class="logo">Logi<span class="highlight">zoid Client Engine</span></div>
             <nav class="nav-menu">
-                <a href="#" class="active">NEW REQUEST</a>
-                <a href="#">MY CONSIGNMENTS</a>
-                <a href="#">STATEMENTS</a>
-                <a href="portal.html" style="color: #ff7300;">EXIT PORTAL</a>
+                <a href="portal.html" style="color: #ff7300; font-weight: bold;">← BACK TO PORTAL</a>
             </nav>
         </header>
 
-        <div class="client-layout">
-            <!-- LEFT: SUBMIT PICKUP REQUEST -->
-            <section class="form-panel">
-                <h2>Request Cargo Pickup</h2>
-                <form id="pickupForm">
-                    <div class="form-row">
-                        <div class="input-box">
-                            <label>Origin Address / Hub</label>
-                            <input type="text" id="origin" placeholder="City or Warehouse Address" required>
+        <div class="mega-layout">
+            <!-- LEFT PANEL: HEAVY BOOKING SHEET -->
+            <section class="booking-sheet">
+                <h2>Comprehensive Freight Manifesto</h2>
+                <form id="advancedManifestForm">
+                    
+                    <div class="section-title">1. Client & Billing Information</div>
+                    <div class="form-grid-2">
+                        <div class="input-block">
+                            <label>Customer Full Name / Corporate Entity</label>
+                            <input type="text" id="custName" placeholder="Who is paying for this shipment?" required>
                         </div>
-                        <div class="input-box">
-                            <label>Destination Center</label>
-                            <input type="text" id="dest" placeholder="Target Delivery Location" required>
+                        <div class="input-block">
+                            <label>Customer Contact Number</label>
+                            <input type="tel" id="custContact" placeholder="Mobile / Telephone" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="input-box">
-                            <label>Estimated Weight (KG)</label>
-                            <input type="number" id="weight" placeholder="Total cargo weight" required>
+
+                    <div class="section-title">2. Cargo Dimensional Metrics</div>
+                    <div class="form-grid-3">
+                        <div class="input-block">
+                            <label>Package Weight (KG)</label>
+                            <input type="number" id="cargoWeight" value="10" min="1" oninput="calculateLivePrice()" required>
                         </div>
-                        <div class="input-box">
-                            <label>Package Type</label>
-                            <select id="boxType">
-                                <option value="Standard Boxes">Standard Carton Boxes</option>
-                                <option value="Palletized Freight">Palletized Freight</option>
-                                <option value="Loose Cargo">Loose Items / Parcel</option>
+                        <div class="input-block">
+                            <label>Packing Type</label>
+                            <select id="packingType">
+                                <option value="Wooden Crate">Wooden Industrial Crate</option>
+                                <option value="Corrugated Box">Corrugated Box Carton</option>
+                                <option value="Palletized Cargo">Palletized Freight Wrap</option>
+                                <option value="Plastic Drum / Barrel">Plastic Drum / Barrel</option>
+                            </select>
+                        </div>
+                        <div class="input-block">
+                            <label>Transportation Mode</label>
+                            <select id="transMode" onchange="calculateLivePrice()">
+                                <option value="Road">🚛 On Road Freight Logistics</option>
+                                <option value="Air">✈️ Premium Air Express</option>
+                                <option value="Water">🚢 Ocean Bulk Carrier Cargo</option>
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn-login" style="margin-top: 10px;">BOOK PICKUP ORDER</button>
+                    <div class="form-grid-3">
+                        <div class="input-block">
+                            <label>Length (cm)</label>
+                            <input type="number" id="dimLength" value="30" min="1" oninput="calculateLivePrice()" required>
+                        </div>
+                        <div class="input-block">
+                            <label>Width (cm)</label>
+                            <input type="number" id="dimWidth" value="30" min="1" oninput="calculateLivePrice()" required>
+                        </div>
+                        <div class="input-block">
+                            <label>Height (cm)</label>
+                            <input type="number" id="dimHeight" value="30" min="1" oninput="calculateLivePrice()" required>
+                        </div>
+                    </div>
+
+                    <div class="section-title">3. Logistics Node Routing</div>
+                    <div class="form-grid-2">
+                        <div class="input-block">
+                            <label>Physical Pickup Address / Origin Hub</label>
+                            <textarea id="pickupLoc" rows="2" placeholder="Full location where driver should arrive" required></textarea>
+                        </div>
+                        <div class="input-block">
+                            <label>Target Delivery Address / Dispatch Center</label>
+                            <textarea id="dispatchLoc" rows="2" placeholder="Ultimate terminal drop-off location" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="section-title">4. Receiver / Consignee Endorsement</div>
+                    <div class="form-grid-3">
+                        <div class="input-block">
+                            <label>Receiver Name</label>
+                            <input type="text" id="recName" placeholder="Authorized Receiver Name" required>
+                        </div>
+                        <div class="input-block">
+                            <label>Receiver Contact No.</label>
+                            <input type="tel" id="recContact" placeholder="Receiver Phone Number" required>
+                        </div>
+                        <div class="input-block">
+                            <label>Drop-off Postal Address</label>
+                            <input type="text" id="recAddress" placeholder="Specific Room/Aisle/Floor details" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login" style="margin-top: 25px; width: 100%; height: 50px; background: #ff7300; color: #fff; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">Generate Track-Code & Save Manifest</button>
                 </form>
             </section>
 
-            <!-- RIGHT: LIVE SHIPMENT TRACKER -->
-            <section class="tracking-status-panel">
-                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">Active Consignment Tracker</h2>
-                <p style="color:#888; font-size:13px;">Review status updates straight from the warehouse floors.</p>
-                
-                <div id="clientTrackFeed">
-                    <div class="track-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <h4 style="font-size:16px;">Order #XSD-99214</h4>
-                            <span style="color:#ff7300; font-size:12px; font-weight:bold;">In Transit</span>
-                        </div>
-                        <p style="font-size:13px; color:#bbb; margin-top:5px;">Route: Mumbai Hub ➔ Delhi WMS</p>
-                        
-                        <div class="track-timeline">
-                            <div class="step done">✓ Booked</div>
-                            <div class="step done">✓ Picked Up</div>
-                            <div class="step done">➔ Loaded</div>
-                            <div class="step">WMS Stored</div>
-                        </div>
+            <!-- RIGHT PANEL: BILLING DISPLAY & LATEST UPDATES -->
+            <section class="side-panel">
+                <div class="calculator-box">
+                    <h3 style="text-transform: uppercase; font-size: 12px; letter-spacing: 2px; color: #aaa;">Live Transport Valuation</h3>
+                    <div class="price-display">₹<span id="calculatedAmount">0.00</span></div>
+                    <p style="font-size: 11px; color: #888; line-height: 1.4;">Estimated value derived directly via physical dimensions, net package mass, and selected regional freight transit nodes.</p>
+                </div>
+
+                <div class="history-box">
+                    <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: bold;">Your Generated Manifest Conduits</h3>
+                    <div id="manifestLog">
+                        <p style="color: #555; font-size: 13px;">No orders generated during this session yet.</p>
                     </div>
                 </div>
             </section>
         </div>
     </div>
-<!-- Include Firebase Core and Database SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-<!-- Include Firebase Core and Database SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <!-- Firebase Connection Initialization Elements -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-<script>
-    // Your exact Firebase config from Screenshot_2026-05-31-22-06-10-384_com.android.chrome.jpg
-    const firebaseConfig = {
-        apiKey: "AIzaSyBffzzeiU6mwm2mg1QzcXvXRs1XP1ikk-4",
-        authDomain: "xesoid-wms.firebaseapp.com",
-        databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
-        projectId: "xesoid-wms",
-        storageBucket: "xesoid-wms.appspot.com",
-        messagingSenderId: "331402984810",
-        appId: "1:331402984810:web:2fcabbd085826d709f913",
-        measurementId: "G-R33XEZ29NX"
-    };
-    
-    // Initialize Firebase
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-
-    // Handle Form Submission
-    document.getElementById('pickupForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const origin = document.getElementById('origin').value;
-        const destination = document.getElementById('dest').value;
-        const weight = document.getElementById('weight').value;
-        const boxType = document.getElementById('boxType').value;
-        const timestamp = Date.now();
-
-        // Create a unique node inside Firebase
-        const newBookingRef = database.ref('customer_requests').push();
-        
-        const requestData = {
-            id: newBookingRef.key,
-            origin: origin,
-            destination: destination,
-            weight_kg: weight,
-            package_type: boxType,
-            status: "Pending Officer Review",
-            submitted_at: timestamp
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBffzzeiU6mwm2mg1QzcXvXRs1XP1ikk-4",
+            authDomain: "xesoid-wms.firebaseapp.com",
+            databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
+            projectId: "xesoid-wms",
+            storageBucket: "xesoid-wms.appspot.com",
+            messagingSenderId: "331402984810",
+            appId: "1:331402984810:web:2fcabbd085826d709f913",
+            measurementId: "G-R33XEZ29NX"
         };
+        
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-        // Send data directly to the cloud
-        newBookingRef.set(requestData)
-            .then(() => {
-                alert(`Success! Request logged with ID: ${newBookingRef.key}`);
-                document.getElementById('pickupForm').reset();
-            })
-            .catch((error) => {
-                alert("Error: " + error.message);
-            });
-    });
-</script>
+        // 🧮 Live Dimensional Calculation Engine
+        function calculateLivePrice() {
+            const weight = parseFloat(document.getElementById('cargoWeight').value) || 0;
+            const length = parseFloat(document.getElementById('dimLength').value) || 0;
+            const width = parseFloat(document.getElementById('dimWidth').value) || 0;
+            const height = parseFloat(document.getElementById('dimHeight').value) || 0;
+            const mode = document.getElementById('transMode').value;
 
+            // Compute Volumetric Scaling Metrics
+            const volume = (length * width * height) / 5000; 
+            const effectiveMass = Math.max(weight, volume);
+
+            let rateMultiplier = 10; // Road Base rate per KG
+            if (mode === "Air") rateMultiplier = 45;
+            if (mode === "Water") rateMultiplier = 15;
+
+            const finalQuotation = effectiveMass * rateMultiplier;
+            document.getElementById('calculatedAmount').innerText = finalQuotation.toFixed(2);
+        }
+
+        // Run baseline configuration parameters once upon structural rendering
+        window.onload = calculateLivePrice;
+
+        // 📥 Submit Structural Payload directly to Cloud Array Tree
+        document.getElementById('advancedManifestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Auto-Generate a Custom High-End Commercial Tracking Code Format (e.g., XSD-771249-IN)
+            const randomID = Math.floor(100000 + Math.random() * 900000);
+            const generatedTrackingCode = `XSD-${randomID}-IN`;
+
+            const manifestData = {
+                tracking_code: generatedTrackingCode,
+                customer_name: document.getElementById('custName').value,
+                customer_contact: document.getElementById('custContact').value,
+                weight_kg: document.getElementById('cargoWeight').value,
+                package_type: document.getElementById('packingType').value,
+                transport_mode: document.getElementById('transMode').value,
+                dimensions: {
+                    length: document.getElementById('dimLength').value,
+                    width: document.getElementById('dimWidth').value,
+                    height: document.getElementById('dimHeight').value
+                },
+                origin: document.getElementById('pickupLoc').value, // Used directly as source path for Adztrack card
+                destination: document.getElementById('dispatchLoc').value,
+                receiver_name: document.getElementById('recName').value,
+                receiver_contact: document.getElementById('recContact').value,
+                receiver_address: document.getElementById('recAddress').value,
+                total_quotation: document.getElementById('calculatedAmount').innerText,
+                status: "Pending Officer Review",
+                submitted_at: Date.now()
+            };
+
+            // Inject record straight into Firebase real-time cluster tree nodes
+            database.ref('customer_requests/' + generatedTrackingCode).set(manifestData)
+                .then(() => {
+                    alert(`Manifest generated successfully!\nTRACKING CODE: ${generatedTrackingCode}\nQuotation Cost: ₹${manifestData.total_quotation}`);
+                    
+                    // Prepend card to current active terminal logging panel
+                    const logContainer = document.getElementById('manifestLog');
+                    if (logContainer.querySelector('p')) logContainer.innerHTML = ''; // Wipe fallback string
+                    
+                    const logItem = `
+                        <div class="mini-card">
+                            <strong>📌 Code: ${generatedTrackingCode}</strong><br>
+                            To: ${manifestData.receiver_name} (${manifestData.destination})<br>
+                            Cost: <span style="color:#00ff66;font-weight:bold;">₹${manifestData.total_quotation}</span> | Mode: ${manifestData.transport_mode}
+                        </div>
+                    `;
+                    logContainer.insertAdjacentHTML('afterbegin', logItem);
+                    
+                    // Flush entry parameters for upcoming booking sequence execution loops
+                    document.getElementById('advancedManifestForm').reset();
+                    calculateLivePrice();
+                })
+                .catch((error) => {
+                    alert("Database Fault Intercepted: " + error.message);
+                });
+        });
+    </script>
 </body>
 </html>
