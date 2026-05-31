@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adztrack - Officer Console</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px 6%; flex: 1; width:100%; }
+        .control-panel { background: rgba(0,0,0,0.75); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); height: fit-content; }
+        .control-panel h2 { font-size: 22px; color: #ff7300; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;}
+        
+        /* Form styling for work assignment */
+        .form-element { margin-bottom: 20px; }
+        .form-element label { display: block; font-size: 13px; color: #aaa; margin-bottom: 8px; font-weight: 600;}
+        .form-element input, .form-element select, .form-element textarea { 
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); 
+            padding: 12px; color: white; border-radius: 6px; outline: none; font-size: 14px;
+        }
+        .form-element input:focus, .form-element select:focus { border-color: #ff7300; }
+        
+        /* Real-time Task Board Monitor */
+        .live-monitor { background: rgba(10,15,30,0.6); padding: 30px; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.15); }
+        .task-strip { background: rgba(255,255,255,0.03); border-left: 4px solid #ff7300; padding: 15px; margin-bottom: 12px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;}
+        .task-strip h4 { margin-bottom: 4px; font-size: 15px; }
+        .task-strip p { font-size: 12px; color: #bbb; }
+        .badge { background: rgba(255,115,0,0.2); color: #ff7300; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; text-transform: uppercase;}
+    </style>
+</head>
+<body>
+
+    <div class="hero-container">
+        <header class="navbar">
+            <div class="logo">Adz<span class="highlight">track Admin</span></div>
+            <nav class="nav-menu">
+                <a href="#" class="active">OFFICER DISPATCH</a>
+                <a href="#">FLEET APPROVALS</a>
+                <a href="#">SYSTEM METRICS</a>
+                <a href="portal.html" style="color: #ff7300;">SWITCH PORTAL</a>
+            </nav>
+        </header>
+
+        <div class="admin-layout">
+            <!-- LEFT: ASSIGNMENT ENGINE -->
+            <section class="control-panel">
+                <h2>Assign New Work Order</h2>
+                <form id="assignForm">
+                    <div class="form-element">
+                        <label>Task / Consignment Title</label>
+                        <input type="text" id="taskTitle" placeholder="e.g., Unload Delhi Fleet / Process Consignment Box B" required>
+                    </div>
+                    <div class="form-element">
+                        <label>Target Module Destination</label>
+                        <select id="taskTarget">
+                            <option value="Tasks Queue">Trackzpot - General Tasks</option>
+                            <option value="Booking Counter">Trackzpot - Booking Pipeline</option>
+                            <option value="Delivery Desk">Trackzpot - Delivery / POD</option>
+                        </select>
+                    </div>
+                    <div class="form-element">
+                        <label>Assign to Trackzpot Handler</label>
+                        <input type="text" id="taskAssignee" placeholder="Enter Operator Name or Team ID" required>
+                    </div>
+                    <button type="submit" class="btn-login" style="margin-top:10px;">PULSE WORK ORDER</button>
+                </form>
+            </section>
+
+            <!-- RIGHT: LIVE MONITOR -->
+            <section class="live-monitor">
+                <h2 style="font-size:20px; margin-bottom:20px; font-weight:700;">Live Trackzpot Active Work Stream</h2>
+                <div id="liveTaskFeed">
+                    <!-- Placeholder entries starting off -->
+                    <div class="task-strip">
+                        <div>
+                            <h4>Process Inbound Fleet MH-04</h4>
+                            <p>Assigned to: <strong>Vijay Operator</strong> | Target: Tasks Queue</p>
+                        </div>
+                        <span class="badge">Dispatched</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Simple client-side storage simulator for quick developer validation checks
+        document.getElementById('assignForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('taskTitle').value;
+            const target = document.getElementById('taskTarget').value;
+            const assignee = document.getElementById('taskAssignee').value;
+
+            // Generate HTML layout card template
+            const newTaskHTML = `
+                <div class="task-strip" style="border-left-color: #00ff66;">
+                    <div>
+                        <h4>${title}</h4>
+                        <p>Assigned to: <strong>${assignee}</strong> | Target: ${target}</p>
+                    </div>
+                    <span class="badge" style="background:rgba(0,255,102,0.15); color:#00ff66;">Live on Trackzpot</span>
+                </div>
+            `;
+
+            // Prepend new element instantly to live feedback monitor block
+            document.getElementById('liveTaskFeed').insertAdjacentHTML('afterbegin', newTaskHTML);
+            
+            // Clear inputs
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskAssignee').value = '';
+        });
+    </script>
+</body>
+</html>
