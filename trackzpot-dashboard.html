@@ -3,8 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trackzpot Console Workspace</title>
+    <title>Trackzpot Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .work-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            width: 100%;
+            padding: 20px 4%;
+            flex: 1;
+        }
+        .sub-menu-panel {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+        }
+        .sub-menu-panel h4 {
+            color: #ff7300;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .sub-link {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px 8px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+        }
+        .sub-link:hover {
+            color: #fff;
+            padding-left: 12px;
+            background: rgba(255,115,0,0.1);
+        }
+        .display-workspace {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 40px;
+            min-height: 450px;
+        }
+    </style>
 </head>
 <body>
 
@@ -12,28 +57,65 @@
         <header class="navbar">
             <div class="logo">Track<span class="highlight">zpot</span></div>
             <nav class="nav-menu">
-                <a href="#" class="active">HOME</a>
-                <a href="#">TASKS</a>
-                <a href="#">REQUEST</a>
-                <a href="#">BOOKING</a>
-                <a href="#">DELIVERY</a>
-                <a href="#">SERVICE ORDERS</a>
-                <a href="#">VEHICLE / DRIVER</a>
-                <a href="#">INVOICES</a>
-                <a href="#">REPORTS</a>
-                <a href="#">ANALYTICS</a>
-                <a href="#">SETTINGS</a>
-                <a href="portal.html" style="color: #ff7300;"><i class="fa-solid fa-grid-horizontal"></i> CHANGE PORTAL</a>
+                <a href="#" class="active" onclick="switchTab('home')">HOME</a>
+                <a href="#" onclick="switchTab('tasks')">TASKS</a>
+                <a href="#" onclick="switchTab('request')">REQUEST</a>
+                <a href="#" onclick="switchTab('booking')">BOOKING</a>
+                <a href="#" onclick="switchTab('delivery')">DELIVERY</a>
+                <a href="#" onclick="switchTab('service')">SERVICE ORDERS</a>
+                <a href="#" onclick="switchTab('vehicle')">VEHICLE / DRIVER</a>
+                <a href="#" onclick="switchTab('invoices')">INVOICES</a>
+                <a href="#" onclick="switchTab('reports')">REPORTS</a>
+                <a href="#" onclick="switchTab('analytics')">ANALYTICS</a>
+                <a href="#" onclick="switchTab('settings')">SETTINGS</a>
+                <a href="portal.html" style="color: #ff7300;">SWITCH PORTAL</a>
             </nav>
         </header>
 
-        <main class="content-wrapper">
-            <section class="hero-text-section">
-                <h1 class="main-heading">Trackzpot <br><span class="highlight">Operations Desk</span></h1>
-                <p class="sub-heading">Welcome to the central command hub for logistics. Execute task queues, review customer intake dockets, process invoices, and manage active vehicle fleets from this terminal panel view.</p>
-            </section>
-        </main>
+        <div class="work-grid">
+            
+            <aside class="sub-menu-panel" id="subMenuContainer">
+                <h4>Home Hub</h4>
+                <div class="sub-link">• Operational Summary Dashboard</div>
+            </aside>
+
+            <main class="display-workspace" id="mainWorkspace">
+                <h2 style="font-size: 28px; margin-bottom: 10px;">Welcome to Trackzpot</h2>
+                <p style="color: #aaa; line-height: 1.6;">Select any top dashboard module component option to instantly load operational submenus and active transaction records.</p>
+            </main>
+
+        </div>
     </div>
 
+    <script>
+        const subMenus = {
+            home: "<h4>Home Hub</h4><a class='sub-link' href='#'>• Summary Dashboard</a>",
+            tasks: "<h4>Task Queues</h4><a class='sub-link' href='#'>• Summary View</a><a class='sub-link' href='#'>• Open Tasks</a><a class='sub-link' href='#'>• Assigned Tasks</a><a class='sub-link' href='#'>• Sent Tasks</a>",
+            request: "<h4>Requests Panel</h4><a class='sub-link' href='#'>• Received Requests</a>",
+            booking: "<h4>Logistics Entry</h4><a class='sub-link' href='#'>• Pickup Request</a><a class='sub-link' href='#'>• Consignment Form</a><a class='sub-link' href='#'>• Planner Board</a><a class='sub-link' href='#'>• Trips Data</a><a class='sub-link' href='#'>• Challans Generator</a><a class='sub-link' href='#'>• Market Vehicle Matrix</a>",
+            delivery: "<h4>Distribution</h4><a class='sub-link' href='#'>• Active Deliveries</a><a class='sub-link' href='#'>• POD Dashboard</a><a class='sub-link' href='#'>• Bulk Upload POD</a>",
+            service: "<h4>Maintenance</h4><a class='sub-link' href='#'>• Service Management</a>",
+            vehicle: "<h4>Fleet Log</h4><a class='sub-link' href='#'>• Driver Check In</a><a class='sub-link' href='#'>• Availability Map</a>",
+            invoices: "<h4>Finance Track</h4><a class='sub-link' href='#'>• Customer Invoice</a><a class='sub-link' href='#'>• Vendor Invoice</a><a class='sub-link' href='#'>• Account Reconcile</a>",
+            reports: "<h4>Report Depot</h4><a class='sub-link' href='#'>• My Custom Report</a><a class='sub-link' href='#'>• Shared Reports</a><a class='sub-link' href='#'>• Base Master Report</a>",
+            analytics: "<h4>BI Charts</h4><a class='sub-link' href='#'>• Sales Analytics</a><a class='sub-link' href='#'>• Management KPIs</a><a class='sub-link' href='#'>• Operations Metric</a><a class='sub-link' href='#'>• Financial Revenue</a>",
+            settings: "<h4>System Parameters</h4><a class='sub-link' href='#'>• Corporate Settings</a><a class='sub-link' href='#'>• Customer Configuration</a><a class='sub-link' href='#'>• Product Master</a><a class='sub-link' href='#'>• Vendor Profiles</a>"
+        };
+
+        function switchTab(tabKey) {
+            // Update Active Menu State Styling
+            document.querySelectorAll('.nav-menu a').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Render Submenus mapped out from flowchart context
+            document.getElementById('subMenuContainer').innerHTML = subMenus[tabKey];
+            
+            // Render basic template info workspace message
+            document.getElementById('mainWorkspace').innerHTML = `
+                <h2 style='font-size:24px; text-transform:uppercase; margin-bottom:10px;'>${tabKey} Terminal Workspace</h2>
+                <p style='color:#aaa;'>Click any sub-menu action item on the left panel to execute operations.</p>
+            `;
+        }
+    </script>
 </body>
 </html>
