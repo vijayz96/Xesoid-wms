@@ -83,6 +83,8 @@
     </div>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
 <script>
     const firebaseConfig = {
@@ -102,20 +104,35 @@
     // Live Stream Client Requests straight to Officer Feed
     database.ref('customer_requests').on('value', (snapshot) => {
         const feedContainer = document.getElementById('liveTaskFeed');
-        feedContainer.innerHTML = ''; // Clear stale placeholders
+        feedContainer.innerHTML = ''; 
         
         if(snapshot.exists()) {
             snapshot.forEach((childSnapshot) => {
                 const item = childSnapshot.val();
                 
-                const taskCardHTML = `
-                    <div class="task-strip">
-                        <div>
-                            <h4>Pickup Request from ${item.origin}</h4>
-                            <p>To: <strong>${item.destination}</strong> | Load: ${item.weight_kg}kg (${item.package_type})</p>
-                            <p style="font-size:10px; color:#ff7300; margin-top:4px;">ID: ${item.id}</p>
+                // Show assignment text box only if the task is still pending review
+                let actionArea = '';
+                if(item.status === "Pending Officer Review") {
+                    actionArea = `
+                        <div style="margin-top:12px; display:flex; gap:10px;">
+                            <input type="text" id="assignee_${item.id}" placeholder="Operator Name" style="padding:6px; background:#222; border:1px solid #444; color:white; border-radius:4px; font-size:12px; flex:1;">
+                            <button onclick="dispatchTask('${item.id}')" style="background:#ff7300; border:none; color:white; padding:6px 12px; border-radius:4px; font-size:12px; font-weight:bold; cursor:pointer;">DISPATCH</button>
                         </div>
-                        <span class="badge">${item.status}</span>
+                    `;
+                } else {
+                    actionArea = `<p style="font-size:11px; color:#00ff66; margin-top:8px;">✓ Assigned to: <strong>${item.assigned_to}</strong></p>`;
+                }
+                
+                const taskCardHTML = `
+                    <div class="task-strip" style="border-left-color: ${item.status === 'Pending Officer Review' ? '#ff7300' : '#00ff66'}; flex-direction: column; align-items: flex-start;">
+                        <div style="width: 100%;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+                                <h4>Pickup Request from ${item.origin}</h4>
+                                <span class="badge" style="background:${item.status === 'Pending Officer Review' ? 'rgba(255,115,0,0.2)' : 'rgba(0,255,102,0.2)'}; color:${item.status === 'Pending Officer Review' ? '#ff7300' : '#00ff66'};">${item.status}</span>
+                            </div>
+                            <p style="margin-top:5px;">To: <strong>${item.destination}</strong> | Load: ${item.weight_kg}kg (${item.package_type})</p>
+                        </div>
+                        ${actionArea}
                     </div>
                 `;
                 feedContainer.insertAdjacentHTML('afterbegin', taskCardHTML);
@@ -125,25 +142,46 @@
         }
     });
 
-    // Manually push administrative orders
+    // Function executed when Officer hits DISPATCH button
+    function dispatchTask(taskId) {
+        const operatorName = document.getElementById(`assignee_${taskId}`).value;
+        if(!operatorName) {
+            alert("Please input an operator's name first!");
+            return;
+        }
+
+        // Update the item status and hand it off to the driver node in the cloud
+        database.ref(`customer_requests/${taskId}`).update({
+            status: "Work Order Dispatched",
+            assigned_to: operatorName
+        }).then(() => {
+            alert("Work order successfully pulsed directly onto Trackzpot workforce channels!");
+        });
+    }
+
+    // Handlers for top manual assignment entry panel forms
     document.getElementById('assignForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const title = document.getElementById('taskTitle').value;
         const target = document.getElementById('taskTarget').value;
         const assignee = document.getElementById('taskAssignee').value;
 
-        const newManualTask = database.ref('admin_dispatches').push();
+        const newManualTask = database.ref('customer_requests').push();
         newManualTask.set({
-            title: title,
-            target_module: target,
-            handler: assignee,
-            status: "Dispatched",
-            timestamp: Date.now()
+            id: newManualTask.key,
+            origin: "Admin Manual Setup",
+            destination: target,
+            weight_kg: "N/A",
+            package_type: title,
+            status: "Work Order Dispatched",
+            assigned_to: assignee,
+            submitted_at: Date.now()
         }).then(() => {
             document.getElementById('assignForm').reset();
         });
     });
 </script>
+
 
 </body>
 </html>
