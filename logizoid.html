@@ -96,17 +96,61 @@
             </section>
         </div>
     </div>
+<!-- Include Firebase Core and Database SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <script>
-        document.getElementById('pickupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert("Pickup request successfully lodged! This order is now broadcasted to the Adztrack Admin Console.");
-            
-            // Reset form fields
-            document.getElementById('origin').value = '';
-            document.getElementById('dest').value = '';
-            document.getElementById('weight').value = '';
-        });
-    </script>
+<script>
+    // Your exact Firebase configuration credentials
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY", // Replace with your real Firebase API Key
+        authDomain: "xesoid-wms.firebaseapp.com",
+        databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
+        projectId: "xesoid-wms"
+    };
+    
+    // Initialize Firebase
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Handle Form Submission
+    document.getElementById('pickupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Grab values entered by the customer
+        const origin = document.getElementById('origin').value;
+        const destination = document.getElementById('dest').value;
+        const weight = document.getElementById('weight').value;
+        const boxType = document.getElementById('boxType').value;
+        const timestamp = Date.now();
+
+        // Create a unique booking reference ID automatically
+        const newBookingRef = database.ref('customer_requests').push();
+        
+        // Structure the data layout
+        const requestData = {
+            id: newBookingRef.key,
+            origin: origin,
+            destination: destination,
+            weight_kg: weight,
+            package_type: boxType,
+            status: "Pending Officer Review",
+            submitted_at: timestamp
+        };
+
+        // Push data straight to your Firebase cloud tree
+        newBookingRef.set(requestData)
+            .then(() => {
+                alert(`Success! Request logged with ID: ${newBookingRef.key}`);
+                // Clear the input fields for the next entry
+                document.getElementById('pickupForm').reset();
+            })
+            .catch((error) => {
+                alert("Error sending data to Firebase: " + error.message);
+                console.error(error);
+            });
+    });
+</script>
+
 </body>
 </html>
