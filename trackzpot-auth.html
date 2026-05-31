@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackzpot Security Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="hero-container">
+        <header class="navbar">
+            <div class="logo">Track<span class="highlight">zpot Gate</span></div>
+        </header>
+        <main class="content-wrapper" style="justify-content: center;">
+            <div class="login-card" style="width: 400px;">
+                <h2>Trackzpot Login Required</h2>
+                <form id="trackzpotForm" class="login-form">
+                    <div class="input-group"><input type="password" id="tpKey" placeholder="Enter Secure Trackzpot Token/Password" required></div>
+                    <button type="submit" class="btn-login">Open Operations Console</button>
+                </form>
+                <p id="err" style="color:red; margin-top:10px; display:none;">Invalid Authorization Key</p>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.getElementById('trackzpotForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Implement customized Firebase logic or a local access control validation check here
+            if(document.getElementById('tpKey').value !== "") {
+                window.location.href = "trackzpot-dashboard.html";
+            }
+        });
+    </script>
+</body>
+</html>
