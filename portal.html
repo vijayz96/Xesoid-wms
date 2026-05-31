@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Operating System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .portal-wrapper { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; min-height: 75vh; padding: 20px; }
+        .portal-box { background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; width: 340px; padding: 40px 30px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .portal-box:hover { border-color: #ff7300; transform: translateY(-5px); }
+        .portal-box h3 { font-size: 24px; margin-bottom: 15px; color: #ffffff; }
+        .portal-box p { font-size: 14px; color: #aaaaaa; line-height: 1.6; margin-bottom: 25px; height: 70px; }
+        .portal-btn { display: inline-block; text-decoration: none; background: transparent; border: 2px solid #ff7300; color: #ff7300; padding: 10px 25px; border-radius: 4px; font-weight: 700; }
+        .portal-box:hover .portal-btn { background: #ff7300; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container">
+        <header class="navbar">
+            <div class="logo">Xesoid <span class="highlight">Enterprise Gate</span></div>
+            <nav class="nav-menu"><a href="#" id="logoutBtn">LOGOUT</a></nav>
+        </header>
+
+        <main class="portal-wrapper">
+            <div class="portal-box" onclick="window.location.href='trackzpot-auth.html'">
+                <h3>Trackzpot Portal</h3>
+                <p>Access primary operations including bookings, invoices, driver schedules, service listings, and data reports.</p>
+                <span class="portal-btn">ENTER TRACKZPOT</span>
+            </div>
+
+            <div class="portal-box" onclick="window.location.href='wms-auth.html'">
+                <h3>Execute (WMS) Terminal</h3>
+                <p>Run specialized warehouse activities including storage allocation maps, scanning engines, putaway, and inbound actions.</p>
+                <span class="portal-btn">ENTER WMS EXECUTION</span>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script>
+        // Reuse same credentials block configuration
+        const firebaseConfig = { projectId: "xesoid-wms" }; 
+        if (!firebase.apps.length) firebase.initializeApp({apiKey: "YOUR_API_KEY", authDomain: "xesoid-wms.firebaseapp.com"});
+        
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            firebase.auth().signOut().then(() => { window.location.href = "index.html"; });
+        });
+    </script>
+</body>
+</html>
