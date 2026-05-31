@@ -81,34 +81,69 @@
             </section>
         </div>
     </div>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <script>
-        // Simple client-side storage simulator for quick developer validation checks
-        document.getElementById('assignForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const title = document.getElementById('taskTitle').value;
-            const target = document.getElementById('taskTarget').value;
-            const assignee = document.getElementById('taskAssignee').value;
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBffzzeiU6mwm2mg1QzcXvXRs1XP1ikk-4",
+        authDomain: "xesoid-wms.firebaseapp.com",
+        databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
+        projectId: "xesoid-wms",
+        storageBucket: "xesoid-wms.appspot.com",
+        messagingSenderId: "331402984810",
+        appId: "1:331402984810:web:2fcabbd085826d709f913",
+        measurementId: "G-R33XEZ29NX"
+    };
+    
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-            // Generate HTML layout card template
-            const newTaskHTML = `
-                <div class="task-strip" style="border-left-color: #00ff66;">
-                    <div>
-                        <h4>${title}</h4>
-                        <p>Assigned to: <strong>${assignee}</strong> | Target: ${target}</p>
+    // Live Stream Client Requests straight to Officer Feed
+    database.ref('customer_requests').on('value', (snapshot) => {
+        const feedContainer = document.getElementById('liveTaskFeed');
+        feedContainer.innerHTML = ''; // Clear stale placeholders
+        
+        if(snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                const item = childSnapshot.val();
+                
+                const taskCardHTML = `
+                    <div class="task-strip">
+                        <div>
+                            <h4>Pickup Request from ${item.origin}</h4>
+                            <p>To: <strong>${item.destination}</strong> | Load: ${item.weight_kg}kg (${item.package_type})</p>
+                            <p style="font-size:10px; color:#ff7300; margin-top:4px;">ID: ${item.id}</p>
+                        </div>
+                        <span class="badge">${item.status}</span>
                     </div>
-                    <span class="badge" style="background:rgba(0,255,102,0.15); color:#00ff66;">Live on Trackzpot</span>
-                </div>
-            `;
+                `;
+                feedContainer.insertAdjacentHTML('afterbegin', taskCardHTML);
+            });
+        } else {
+            feedContainer.innerHTML = '<p style="color:#666; font-size:13px;">No active client requests found.</p>';
+        }
+    });
 
-            // Prepend new element instantly to live feedback monitor block
-            document.getElementById('liveTaskFeed').insertAdjacentHTML('afterbegin', newTaskHTML);
-            
-            // Clear inputs
-            document.getElementById('taskTitle').value = '';
-            document.getElementById('taskAssignee').value = '';
+    // Manually push administrative orders
+    document.getElementById('assignForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('taskTitle').value;
+        const target = document.getElementById('taskTarget').value;
+        const assignee = document.getElementById('taskAssignee').value;
+
+        const newManualTask = database.ref('admin_dispatches').push();
+        newManualTask.set({
+            title: title,
+            target_module: target,
+            handler: assignee,
+            status: "Dispatched",
+            timestamp: Date.now()
+        }).then(() => {
+            document.getElementById('assignForm').reset();
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
