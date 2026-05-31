@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Operating System</title>
+    <title>Select Operating System - Xesoid</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .portal-wrapper { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; min-height: 75vh; padding: 20px; }
-        .portal-box { background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; width: 340px; padding: 40px 30px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .portal-wrapper { display: flex; justify-content: center; align-items: center; gap: 25px; flex-wrap: wrap; min-height: 80vh; padding: 20px; }
+        .portal-box { background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; width: 280px; padding: 35px 20px; text-align: center; cursor: pointer; transition: all 0.3s; }
         .portal-box:hover { border-color: #ff7300; transform: translateY(-5px); }
-        .portal-box h3 { font-size: 24px; margin-bottom: 15px; color: #ffffff; }
-        .portal-box p { font-size: 14px; color: #aaaaaa; line-height: 1.6; margin-bottom: 25px; height: 70px; }
-        .portal-btn { display: inline-block; text-decoration: none; background: transparent; border: 2px solid #ff7300; color: #ff7300; padding: 10px 25px; border-radius: 4px; font-weight: 700; }
+        .portal-box h3 { font-size: 22px; margin-bottom: 12px; color: #ffffff; }
+        .portal-box p { font-size: 13px; color: #aaaaaa; line-height: 1.5; margin-bottom: 25px; height: 75px; }
+        .portal-btn { display: inline-block; text-decoration: none; background: transparent; border: 2px solid #ff7300; color: #ff7300; padding: 8px 20px; border-radius: 4px; font-weight: 700; font-size: 13px;}
         .portal-box:hover .portal-btn { background: #ff7300; color: white; }
     </style>
 </head>
@@ -23,16 +23,32 @@
         </header>
 
         <main class="portal-wrapper">
-            <div class="portal-box" onclick="window.location.href='trackzpot-dashboard.html'">
-                <h3>Trackzpot Portal</h3>
-                <p>Access primary operations including bookings, dockets, invoices, driver schedules, and logistics data reports.</p>
-                <span class="portal-btn">ENTER TRACKZPOT</span>
+            <!-- 1. ADZTRACK (ADMIN) -->
+            <div class="portal-box" onclick="window.location.href='adztrack.html'">
+                <h3>Adztrack <span class="highlight">(Admin)</span></h3>
+                <p>Officer Command Tower. Manage system nodes, assign tasks, and monitor global tracking queues.</p>
+                <span class="portal-btn">OFFICER LOGIN</span>
             </div>
 
+            <!-- 2. LOGIZOID (CUSTOMER HUB) -->
+            <div class="portal-box" onclick="window.location.href='logizoid.html'">
+                <h3>Logizoid <span class="highlight">(Client)</span></h3>
+                <p>Customer Interaction Portal. Log pickup requests, monitor order tracks, and check invoices.</p>
+                <span class="portal-btn">CUSTOMER PORTAL</span>
+            </div>
+
+            <!-- 3. TRACKZPOT (OPERATIONS) -->
+            <div class="portal-box" onclick="window.location.href='trackzpot-dashboard.html'">
+                <h3>Trackzpot Portal</h3>
+                <p>Logistics field desk. View assigned tasks, process dockets, and record delivery logs.</p>
+                <span class="portal-btn">OPERATIONS CORE</span>
+            </div>
+
+            <!-- 4. WMS (EXECUTION) -->
             <div class="portal-box" onclick="window.location.href='wms-dashboard.html'">
-                <h3>Execute (WMS) Terminal</h3>
-                <p>Run specialized warehouse activities including storage allocation maps, scanning engines, putaway, and inbound actions.</p>
-                <span class="portal-btn">ENTER WMS EXECUTION</span>
+                <h3>Execute (WMS)</h3>
+                <p>Warehouse floor terminal. Handle inventory routing, live barcode setups, and load maps.</p>
+                <span class="portal-btn">WAREHOUSE FLOOR</span>
             </div>
         </main>
     </div>
