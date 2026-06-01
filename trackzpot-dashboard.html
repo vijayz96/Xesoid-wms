@@ -3,439 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trackzpot - Redirect Test Environment</title>
+    <title>Trackzpot Dashboard</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0a0c12 0%, #0f111a 100%);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-        }
-
-        /* Test Mode Banner */
-        .test-banner {
-            background: #ff7300;
-            color: #0a0c12;
-            text-align: center;
-            padding: 8px;
-            font-weight: bold;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-
-        .navbar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 4%;
-            background: rgba(5, 7, 12, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 115, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 30%, #ffb347 80%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .logo .highlight {
-            color: #ff7300;
-            background: none;
-        }
-
-        .nav-menu {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 20px;
-        }
-
-        .nav-menu a {
-            color: #dddddd;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 6px 0;
-            transition: 0.2s;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-menu a:hover {
-            color: #ffaa66;
-            border-bottom-color: #ff7300;
-        }
-
-        .work-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 30px;
-            padding: 32px 4%;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .sub-menu-panel {
-            background: rgba(12, 15, 25, 0.8);
-            border: 1px solid rgba(255, 115, 0, 0.25);
-            border-radius: 20px;
-            padding: 24px;
-            height: fit-content;
-        }
-
-        .sub-menu-panel h4 {
-            color: #ff7300;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-            border-left: 3px solid #ff7300;
-            padding-left: 12px;
-        }
-
-        .sub-link {
-            display: block;
-            color: #cbd5e6;
-            text-decoration: none;
-            padding: 10px 12px;
-            font-size: 0.85rem;
-            border-radius: 12px;
-            margin-bottom: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .sub-link:hover {
-            background: rgba(255, 115, 0, 0.15);
-            transform: translateX(4px);
-        }
-
-        .display-workspace {
-            background: rgba(10, 12, 20, 0.6);
-            border: 1px solid rgba(255, 115, 0, 0.2);
-            border-radius: 24px;
-            padding: 32px;
-            min-height: 500px;
-        }
-
-        .redirect-demo-card {
-            background: linear-gradient(135deg, rgba(255,115,0,0.1), rgba(255,115,0,0.02));
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
-            border: 1px solid rgba(255,115,0,0.3);
-        }
-
-        .test-link {
-            display: inline-block;
-            background: #ff7300;
-            color: #0a0c12;
-            padding: 12px 24px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 8px 8px 0 0;
-            transition: transform 0.2s;
-        }
-
-        .test-link:hover {
-            transform: translateY(-2px);
-            background: #ff9040;
-        }
-
-        .code-block {
-            background: #0a0c12;
-            padding: 16px;
-            border-radius: 12px;
-            font-family: monospace;
-            font-size: 13px;
-            color: #ffaa66;
-            margin: 16px 0;
-            overflow-x: auto;
-        }
-
-        .success-badge {
-            background: #00c48c;
-            color: #0a0c12;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .warning-badge {
-            background: #ffaa33;
-            color: #0a0c12;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .work-grid {
-                grid-template-columns: 1fr;
-            }
-            .navbar {
-                flex-direction: column;
-                gap: 12px;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:#0a0c12;font-family:system-ui,sans-serif;color:#f0f3f8;}
+        .navbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:18px 4%;background:rgba(5,7,12,0.95);border-bottom:1px solid #ff7300;position:sticky;top:0;}
+        .logo{font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,#fff,#ffb347);-webkit-background-clip:text;background-clip:text;color:transparent;}
+        .logo .highlight{color:#ff7300;background:none;}
+        .nav-menu{display:flex;flex-wrap:wrap;gap:8px 20px;}
+        .nav-menu a{color:#ddd;text-decoration:none;font-size:0.8rem;font-weight:600;padding:6px 0;border-bottom:2px solid transparent;}
+        .nav-menu a:hover{color:#ffaa66;border-bottom-color:#ff7300;}
+        .work-grid{display:grid;grid-template-columns:240px 1fr;gap:30px;padding:32px 4%;}
+        .sub-menu-panel{background:rgba(12,15,25,0.8);border:1px solid rgba(255,115,0,0.25);border-radius:20px;padding:24px;}
+        .sub-menu-panel h4{color:#ff7300;font-size:0.85rem;margin-bottom:18px;border-left:3px solid #ff7300;padding-left:12px;}
+        .sub-link{display:block;color:#cbd5e6;text-decoration:none;padding:10px 12px;font-size:0.85rem;border-radius:12px;margin-bottom:6px;cursor:pointer;}
+        .sub-link:hover{background:rgba(255,115,0,0.15);transform:translateX(4px);}
+        .display-workspace{background:rgba(10,12,20,0.6);border:1px solid rgba(255,115,0,0.2);border-radius:24px;padding:32px;min-height:500px;}
+        .card{background:rgba(255,115,0,0.1);border-radius:20px;padding:24px;margin-bottom:24px;border:1px solid rgba(255,115,0,0.3);}
+        button{background:#ff7300;border:none;padding:10px 20px;border-radius:40px;font-weight:bold;cursor:pointer;margin:5px;}
+        button:hover{background:#ff9040;}
+        @media(max-width:768px){.work-grid{grid-template-columns:1fr;}}
     </style>
 </head>
 <body>
-
-<!-- Test Mode Indicator -->
-<div class="test-banner">
-    🧪 TEST MODE - Click any navigation link to verify redirect pattern: ../billing/billing.html style
-</div>
-
-<header class="navbar">
-    <div class="logo">Track<span class="highlight">zpot</span></div>
-    <nav class="nav-menu" id="mainNav">
-        <!-- ALL LINKS use the specified redirect pattern -->
-        <a href="../billing/billing.html">BILLING</a>
-        <a href="../tasks/task-dispatch.html">TASKS</a>
-        <a href="../requests/service-request.html">REQUEST</a>
-        <a href="../booking/logistics-booking.html">BOOKING</a>
-        <a href="../delivery/fleet-delivery.html">DELIVERY</a>
-        <a href="../service/work-orders.html">SERVICE ORDERS</a>
-        <a href="../vehicle/driver-manifest.html">VEHICLE / DRIVER</a>
-        <a href="../invoices/invoice-portal.html">INVOICES</a>
-        <a href="../reports/analytics-report.html">REPORTS</a>
-        <a href="../analytics/dashboard-intel.html">ANALYTICS</a>
-        <a href="../settings/system-config.html">SETTINGS</a>
-        <a href="portal.html" style="color: #ff7300;">SWITCH PORTAL</a>
-    </nav>
-</header>
-
-<div class="work-grid">
-    <aside class="sub-menu-panel">
-        <h4>🔧 Redirect Test Panel</h4>
-        <div class="sub-link" onclick="showRedirectInfo('billing')">• Test Billing Redirect</div>
-        <div class="sub-link" onclick="showRedirectInfo('tasks')">• Test Tasks Redirect</div>
-        <div class="sub-link" onclick="showRedirectInfo('request')">• Test Request Redirect</div>
-        <div class="sub-link" onclick="showRedirectInfo('booking')">• Test Booking Redirect</div>
-        <div class="sub-link" onclick="showRedirectInfo('delivery')">• Test Delivery Redirect</div>
-        <div class="sub-link" onclick="showRedirectInfo('service')">• Test Service Orders</div>
-        <div class="sub-link" onclick="showRedirectInfo('vehicle')">• Test Vehicle/Driver</div>
-        <div class="sub-link" onclick="showRedirectInfo('invoices')">• Test Invoices</div>
-        <div class="sub-link" onclick="showRedirectInfo('reports')">• Test Reports</div>
-        <div class="sub-link" onclick="showRedirectInfo('analytics')">• Test Analytics</div>
-        <div class="sub-link" onclick="showRedirectInfo('settings')">• Test Settings</div>
-        <hr style="margin: 16px 0; border-color: rgba(255,115,0,0.2);">
-        <div class="sub-link" onclick="location.href='portal.html'" style="color:#ff7300;">• SWITCH PORTAL</div>
-    </aside>
-
-    <main class="display-workspace" id="mainWorkspace">
-        <div class="redirect-demo-card">
-            <h2 style="font-size: 26px; margin-bottom: 12px;">✅ Redirect Pattern Validation</h2>
-            <p style="color: #bbb; margin-bottom: 16px;">All top navigation links have been replaced with direct href redirects using the pattern:</p>
-            <div class="code-block">
-                &lt;a href="../billing/billing.html"&gt;BILLING&lt;/a&gt;<br>
-                &lt;a href="../tasks/task-dispatch.html"&gt;TASKS&lt;/a&gt;<br>
-                &lt;a href="../requests/service-request.html"&gt;REQUEST&lt;/a&gt;<br>
-                &lt;a href="../booking/logistics-booking.html"&gt;BOOKING&lt;/a&gt;
+    <header class="navbar">
+        <div class="logo">Track<span class="highlight">zpot</span></div>
+        <nav class="nav-menu">
+            <a href="../billing/billing.html">BILLING</a>
+            <a href="../tasks/task-dispatch.html">TASKS</a>
+            <a href="../requests/service-request.html">REQUEST</a>
+            <a href="../booking/logistics-booking.html">BOOKING</a>
+            <a href="../delivery/fleet-delivery.html">DELIVERY</a>
+            <a href="../service/work-orders.html">SERVICE ORDERS</a>
+            <a href="../vehicle/driver-manifest.html">VEHICLE / DRIVER</a>
+            <a href="../invoices/invoice-portal.html">INVOICES</a>
+            <a href="../reports/analytics-report.html">REPORTS</a>
+            <a href="../analytics/dashboard-intel.html">ANALYTICS</a>
+            <a href="../settings/system-config.html">SETTINGS</a>
+            <a href="portal.html" style="color:#ff7300;">SWITCH PORTAL</a>
+        </nav>
+    </header>
+    <div class="work-grid">
+        <aside class="sub-menu-panel">
+            <h4>📋 MENU</h4>
+            <div class="sub-link" onclick="location.href='../billing/billing.html'">💰 Billing</div>
+            <div class="sub-link" onclick="location.href='../tasks/task-dispatch.html'">📋 Tasks</div>
+            <div class="sub-link" onclick="location.href='../requests/service-request.html'">📮 Request</div>
+            <div class="sub-link" onclick="location.href='../booking/logistics-booking.html'">📦 Booking</div>
+            <div class="sub-link" onclick="location.href='../delivery/fleet-delivery.html'">🚚 Delivery</div>
+            <div class="sub-link" onclick="location.href='../service/work-orders.html'">🔧 Service</div>
+            <div class="sub-link" onclick="location.href='../vehicle/driver-manifest.html'">🚗 Vehicle</div>
+            <div class="sub-link" onclick="location.href='../invoices/invoice-portal.html'">📄 Invoices</div>
+            <div class="sub-link" onclick="location.href='../reports/analytics-report.html'">📊 Reports</div>
+            <div class="sub-link" onclick="location.href='../analytics/dashboard-intel.html'">📈 Analytics</div>
+            <div class="sub-link" onclick="location.href='../settings/system-config.html'">⚙️ Settings</div>
+        </aside>
+        <main class="display-workspace">
+            <div class="card">
+                <h2 style="font-size:28px;margin-bottom:10px;">✅ Trackzpot Ready</h2>
+                <p style="color:#bbb;margin-bottom:20px;">All navigation links use redirect pattern: <code style="background:#000;padding:4px 8px;border-radius:8px;">../folder/page.html</code></p>
+                <p><strong>Click any top menu item</strong> → redirects to the specified path</p>
+                <p style="margin-top:15px;color:#00c48c;">✓ 12 redirects active | Pure HTML navigation</p>
             </div>
-            <p style="color: #00c48c; margin-top: 12px;">✓ No JavaScript intercepts - pure HTML redirects</p>
-        </div>
-
-        <div class="redirect-demo-card">
-            <h3 style="margin-bottom: 16px;">🧪 Click to Test Redirects (Direct Navigation)</h3>
-            <p style="color: #aaa; margin-bottom: 16px;">These buttons simulate clicking the actual navigation links - they will attempt to redirect to the respective pages.</p>
-            
-            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-                <button class="test-link" onclick="testRedirect('../billing/billing.html')">📄 Test Billing →</button>
-                <button class="test-link" onclick="testRedirect('../tasks/task-dispatch.html')">📋 Test Tasks →</button>
-                <button class="test-link" onclick="testRedirect('../requests/service-request.html')">📮 Test Request →</button>
-                <button class="test-link" onclick="testRedirect('../booking/logistics-booking.html')">📦 Test Booking →</button>
-                <button class="test-link" onclick="testRedirect('../delivery/fleet-delivery.html')">🚚 Test Delivery →</button>
-                <button class="test-link" onclick="testRedirect('../service/work-orders.html')">🔧 Test Service →</button>
-                <button class="test-link" onclick="testRedirect('../vehicle/driver-manifest.html')">🚗 Test Vehicle →</button>
-                <button class="test-link" onclick="testRedirect('../invoices/invoice-portal.html')">💰 Test Invoices →</button>
-                <button class="test-link" onclick="testRedirect('../reports/analytics-report.html')">📊 Test Reports →</button>
-                <button class="test-link" onclick="testRedirect('../analytics/dashboard-intel.html')">📈 Test Analytics →</button>
-                <button class="test-link" onclick="testRedirect('../settings/system-config.html')">⚙️ Test Settings →</button>
-                <button class="test-link" onclick="testRedirect('portal.html')" style="background:#ff7300;">🔄 SWITCH PORTAL</button>
+            <div class="card">
+                <h3>📋 Test Redirects</h3>
+                <button onclick="location.href='../billing/billing.html'">Test Billing</button>
+                <button onclick="location.href='../tasks/task-dispatch.html'">Test Tasks</button>
+                <button onclick="location.href='../requests/service-request.html'">Test Request</button>
+                <button onclick="location.href='../booking/logistics-booking.html'">Test Booking</button>
+                <button onclick="location.href='portal.html'">Switch Portal</button>
             </div>
-        </div>
-
-        <div class="redirect-demo-card">
-            <h3 style="margin-bottom: 12px;">📋 Current Redirect Mapping Table</h3>
-            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                <thead>
-                    <tr style="border-bottom: 1px solid rgba(255,115,0,0.3);">
-                        <th style="text-align: left; padding: 10px;">Menu Item</th>
-                        <th style="text-align: left; padding: 10px;">Redirect Path</th>
-                        <th style="text-align: left; padding: 10px;">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td style="padding: 10px;">BILLING</td><td style="padding: 10px;"><code>../billing/billing.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">TASKS</td><td style="padding: 10px;"><code>../tasks/task-dispatch.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">REQUEST</td><td style="padding: 10px;"><code>../requests/service-request.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">BOOKING</td><td style="padding: 10px;"><code>../booking/logistics-booking.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">DELIVERY</td><td style="padding: 10px;"><code>../delivery/fleet-delivery.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">SERVICE ORDERS</td><td style="padding: 10px;"><code>../service/work-orders.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">VEHICLE / DRIVER</td><td style="padding: 10px;"><code>../vehicle/driver-manifest.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">INVOICES</td><td style="padding: 10px;"><code>../invoices/invoice-portal.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">REPORTS</td><td style="padding: 10px;"><code>../reports/analytics-report.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">ANALYTICS</td><td style="padding: 10px;"><code>../analytics/dashboard-intel.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">SETTINGS</td><td style="padding: 10px;"><code>../settings/system-config.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                    <tr><td style="padding: 10px;">SWITCH PORTAL</td><td style="padding: 10px;"><code>portal.html</code></td><td style="padding: 10px;"><span class="success-badge">✓ Active</span></td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="redirect-demo-card">
-            <h3 style="margin-bottom: 12px;">💡 How To Verify Redirects Work</h3>
-            <p style="color: #bbb; line-height: 1.6;">1️⃣ <strong>Click any top navigation link</strong> (BILLING, TASKS, REQUEST, etc.)<br>
-            2️⃣ Your browser will attempt to navigate to the specified path like <code>../billing/billing.html</code><br>
-            3️⃣ <strong>Expected behavior:</strong> The page will try to load that file. If the file doesn't exist, you'll see a "404 Not Found" error — this is <strong>good!</strong> It proves the redirect is trying to go to the correct path.<br>
-            4️⃣ <strong>Alternative test:</strong> Click the colored test buttons above — they attempt the same redirects.</p>
-            
-            <div class="code-block" style="margin-top: 16px;">
-                ✅ All JavaScript onclick handlers removed from navigation<br>
-                ✅ Pure HTML href attributes with relative paths<br>
-                ✅ Pattern: ../folder/page.html (goes up one level then into specific folder)
-            </div>
-            
-            <div style="margin-top: 20px; padding: 12px; background: rgba(0,196,140,0.1); border-radius: 12px;">
-                <span class="success-badge">✓ VERIFICATION PASSED</span>
-                <span style="margin-left: 12px; color: #aaa;">All 12 navigation links use the required redirect method</span>
-            </div>
-        </div>
-    </main>
-</div>
-
-<script>
-    // Test function to demonstrate redirect attempts
-    function testRedirect(url) {
-        console.log(`Testing redirect to: ${url}`);
-        // Show a toast-like notification
-        showNotification(`Redirecting to: ${url}`, 'info');
-        
-        // Small delay to show the notification, then redirect
-        setTimeout(() => {
-            window.location.href = url;
-        }, 300);
-    }
-
-    function showNotification(message, type) {
-        // Create temporary notification div
-        const notif = document.createElement('div');
-        notif.textContent = message;
-        notif.style.position = 'fixed';
-        notif.style.bottom = '20px';
-        notif.style.right = '20px';
-        notif.style.backgroundColor = type === 'info' ? '#ff7300' : '#00c48c';
-        notif.style.color = '#0a0c12';
-        notif.style.padding = '12px 20px';
-        notif.style.borderRadius = '40px';
-        notif.style.fontWeight = 'bold';
-        notif.style.zIndex = '9999';
-        notif.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
-        notif.style.fontSize = '14px';
-        document.body.appendChild(notif);
-        
-        setTimeout(() => {
-            notif.style.opacity = '0';
-            setTimeout(() => notif.remove(), 500);
-        }, 2000);
-    }
-
-    function showRedirectInfo(module) {
-        const redirectMap = {
-            billing: '../billing/billing.html',
-            tasks: '../tasks/task-dispatch.html',
-            request: '../requests/service-request.html',
-            booking: '../booking/logistics-booking.html',
-            delivery: '../delivery/fleet-delivery.html',
-            service: '../service/work-orders.html',
-            vehicle: '../vehicle/driver-manifest.html',
-            invoices: '../invoices/invoice-portal.html',
-            reports: '../reports/analytics-report.html',
-            analytics: '../analytics/dashboard-intel.html',
-            settings: '../settings/system-config.html'
-        };
-        
-        const url = redirectMap[module];
-        if(url) {
-            showNotification(`Redirect target: ${url}`, 'info');
-            // Also display in main content area temporarily
-            const mainArea = document.getElementById('mainWorkspace');
-            const originalHTML = mainArea.innerHTML;
-            const tempMsg = document.createElement('div');
-            tempMsg.style.position = 'fixed';
-            tempMsg.style.top = '50%';
-            tempMsg.style.left = '50%';
-            tempMsg.style.transform = 'translate(-50%, -50%)';
-            tempMsg.style.backgroundColor = '#0a0c12';
-            tempMsg.style.border = '2px solid #ff7300';
-            tempMsg.style.borderRadius = '16px';
-            tempMsg.style.padding = '24px';
-            tempMsg.style.zIndex = '10000';
-            tempMsg.style.textAlign = 'center';
-            tempMsg.innerHTML = `<h3>🔗 Redirect Preview</h3><p style="margin:12px 0;">Would navigate to:</p><code style="background:#1a1c2a;padding:8px;border-radius:8px;">${url}</code><br><br><button onclick="this.parentElement.remove()" style="background:#ff7300;border:none;padding:8px 20px;border-radius:24px;cursor:pointer;">Close</button>`;
-            document.body.appendChild(tempMsg);
-        }
-    }
-
-    // Log all navigation links for verification
-    window.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.querySelectorAll('#mainNav a');
-        console.log('=== Redirect Verification ===');
-        navLinks.forEach((link, idx) => {
-            const href = link.getAttribute('href');
-            const text = link.innerText;
-            console.log(`${idx + 1}. ${text} -> ${href}`);
-            
-            // Ensure no onclick attributes interfere
-            if (link.hasAttribute('onclick')) {
-                console.warn(`⚠️ Found onclick on ${text} - removing`);
-                link.removeAttribute('onclick');
-            }
-        });
-        
-        console.log(`✅ Total navigation links converted: ${navLinks.length}`);
-        console.log('All redirects follow pattern: ../module/page.html');
-        
-        // Display count in workspace
-        const statsDiv = document.createElement('div');
-        statsDiv.style.position = 'fixed';
-        statsDiv.style.bottom = '20px';
-        statsDiv.style.left = '20px';
-        statsDiv.style.backgroundColor = 'rgba(0,0,0,0.7)';
-        statsDiv.style.padding = '6px 12px';
-        statsDiv.style.borderRadius = '20px';
-        statsDiv.style.fontSize = '11px';
-        statsDiv.style.fontFamily = 'monospace';
-        statsDiv.style.color = '#ffaa66';
-        statsDiv.innerHTML = `🔗 ${navLinks.length} redirects active | Pattern: ../folder/page.html`;
-        document.body.appendChild(statsDiv);
-    });
-
-    // Optional: Intercept clicks to show redirect info without actually leaving (for demo purposes only)
-    // This is for demonstration - actual redirects work normally
-    // The test buttons above will actually redirect
-    // Real navigation links will redirect normally (no interception)
-</script>
-
-<!-- Additional inline verification -->
-<div style="display: none;" id="verificationData">
-    All navigation links verified: using href attributes with relative paths starting with ../
-</div>
-
+        </main>
+    </div>
 </body>
 </html>
