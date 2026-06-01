@@ -11,24 +11,29 @@
         .tab-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #aaa; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; text-transform: uppercase; transition: all 0.2s; }
         .tab-btn.active { background: #ff7300; border-color: #ff7300; color: white; }
         
-        .registry-section { background: rgba(10, 15, 30, 0.85); border: 1px solid rgba(255,255,255,0.08); padding: 30px; border-radius: 12px; }
+        .registry-section { background: #0d1527; border: 1px solid rgba(255,255,255,0.08); padding: 30px; border-radius: 12px; }
         .search-wrapper { display: flex; align-items: center; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; padding: 5px 15px; max-width: 400px; margin-bottom: 25px; }
         .search-wrapper input { background: transparent; border: none; color: white; padding: 10px; width: 100%; outline: none; font-size: 14px; }
         .search-icon { color: #ff7300; font-size: 18px; margin-right: 5px; }
 
-        /* Corporate Data Table Layout */
-        .table-responsive { width: 100%; overflow-x: auto; }
         .data-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13px; }
-        .data-table th { background: rgba(255,115,0,0.1); color: #ff7300; padding: 15px; border-bottom: 2px solid rgba(255,115,0,0.3); font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
-        .data-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: middle; }
-        .data-table tr:hover { background: rgba(255,255,255,0.02); }
+        .data-table th { background: rgba(255,115,0,0.1); color: #ff7300; padding: 15px; border-bottom: 2px solid rgba(255,115,0,0.3); font-weight: bold; text-transform: uppercase; font-size: 11px; }
+        .data-table td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc; }
         
-        /* Badges */
+        .dispatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 15px; }
+        .dispatch-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 20px; border-top: 3px solid #ff7300; }
+        .dispatch-card h4 { color: #fff; margin-bottom: 8px; font-size: 16px; }
+        .dispatch-card p { font-size: 13px; color: #aaa; margin: 3px 0; }
+        
+        .assign-box { display: flex; gap: 10px; margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .assign-box input { background: #16223f; border: 1px solid #3d4f73; color: white; padding: 8px; border-radius: 4px; flex: 1; font-size: 12px; outline: none; }
+        .assign-box button { background: #ff7300; color: white; border: none; padding: 8px 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 12px; text-transform: uppercase; }
+
         .status-pill { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; }
         .pill-pending { background: rgba(255, 115, 0, 0.15); color: #ff7300; border: 1px solid rgba(255, 115, 0, 0.3); }
-        .pill-transit { background: rgba(0, 188, 255, 0.15); color: #00bcff; border: 1px solid rgba(0, 188, 255, 0.3); }
+        .pill-dispatched { background: rgba(255, 204, 0, 0.15); color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.3); }
+        .pill-accepted { background: rgba(0, 188, 255, 0.15); color: #00bcff; border: 1px solid rgba(0, 188, 255, 0.3); }
         .pill-stored { background: rgba(0, 255, 102, 0.15); color: #00ff66; border: 1px solid rgba(0, 255, 102, 0.3); }
-        .mode-badge { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: #fff; }
     </style>
 </head>
 <body>
@@ -42,59 +47,50 @@
         </header>
 
         <div class="admin-container">
-            <!-- OPTIONS / TAB SELECTION -->
             <div class="tab-navigation">
-                <button class="tab-btn active" onclick="switchView('registry')">📋 View Inbound Orders Grid</button>
-                <button class="tab-btn" onclick="switchView('tasks')">🚚 Trackzpot Tasks & Dispatch (Later)</button>
+                <button id="btnRegistry" class="tab-btn active" onclick="switchView('registry')">📋 View Inbound Orders Grid</button>
+                <button id="btnTasks" class="tab-btn" onclick="switchView('tasks')">🚚 Trackzpot Tasks & Dispatch</button>
             </div>
 
-            <!-- OPTION 1: MASTER REGISTRY AREA -->
             <section id="registryView" class="registry-section">
                 <h2 style="font-size: 20px; color: #fff; margin-bottom: 5px;">Master Freight Registry</h2>
                 <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Real-time analytical view of all customer shipments logged via the Logizoid Client Interface.</p>
 
-                <!-- SEARCH ENGINE COMPONENT -->
                 <div class="search-wrapper">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="orderSearchInput" onkeyup="filterRegistryTable()" placeholder="Search by Track Code (e.g., XSD-7712)...">
+                    <input type="text" id="orderSearchInput" onkeyup="filterRegistryTable()" placeholder="Search by Track Code...">
                 </div>
 
-                <!-- REGISTRY TABLE DATA GRID -->
                 <div class="table-responsive">
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>Track Code</th>
-                                <th>Customer & Contact</th>
+                                <th>Customer Details</th>
                                 <th>Route (From ➔ To)</th>
                                 <th>Cargo Specs</th>
-                                <th>Transport</th>
+                                <th>Mode</th>
                                 <th>Quotation</th>
                                 <th>Live Status</th>
                             </tr>
                         </thead>
                         <tbody id="registryTableBody">
-                            <tr>
-                                <td colspan="7" style="color: #666; text-align: center; padding: 30px;">Establishing secure stream connection to database...</td>
-                            </tr>
+                            <tr><td colspan="7" style="color:#666; text-align:center;">Connecting...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- OPTION 2: COMPONENT STUB FOR TRACKZPOT MANAGEMENT (FUTURE PHASE) -->
             <section id="tasksView" class="registry-section" style="display: none;">
-                <h2 style="font-size: 20px; color: #ff7300; margin-bottom: 10px;">Trackzpot Dispatch Terminal</h2>
-                <p style="color: #aaa; font-size: 14px; line-height: 1.6;">
-                    This terminal segment is reserved for tasking protocols, route optimization updates, and automated driver tracking links. 
-                    <br><br>
-                    <span style="color: #00ff66; font-weight: bold;">Status:</span> Standby. We will build this area out extensively in the next phase!
-                </p>
+                <h2 style="font-size: 20px; color: #fff; margin-bottom: 5px;">Trackzpot Workforce Dispatch Terminal</h2>
+                <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Assign incoming unmanaged client orders to field transporters instantly.</p>
+                
+                <div class="dispatch-grid" id="pendingDispatchContainer">
+                    </div>
             </section>
         </div>
     </div>
 
-    <!-- Firebase Connection Framework -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
@@ -103,94 +99,107 @@
             apiKey: "AIzaSyBffzzeiU6mwm2mg1QzcXvXRs1XP1ikk-4",
             authDomain: "xesoid-wms.firebaseapp.com",
             databaseURL: "https://xesoid-wms-default-rtdb.firebaseio.com/",
-            projectId: "xesoid-wms",
-            storageBucket: "xesoid-wms.appspot.com",
-            messagingSenderId: "331402984810",
-            appId: "1:331402984810:web:2fcabbd085826d709f913",
-            measurementId: "G-R33XEZ29NX"
+            projectId: "xesoid-wms"
         };
-        
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // View Switcher (Options Navigation Switch)
         function switchView(viewKey) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
+            document.getElementById('btnRegistry').classList.remove('active');
+            document.getElementById('btnTasks').classList.remove('active');
+            
             if(viewKey === 'registry') {
+                document.getElementById('btnRegistry').classList.add('active');
                 document.getElementById('registryView').style.display = 'block';
                 document.getElementById('tasksView').style.display = 'none';
             } else {
+                document.getElementById('btnTasks').classList.add('active');
                 document.getElementById('registryView').style.display = 'none';
                 document.getElementById('tasksView').style.display = 'block';
             }
         }
 
-        // 🔄 Fetch and populate the table from Firebase Live
+        // Single Stream Listener syncing data pipelines
         database.ref('customer_requests').on('value', (snapshot) => {
             const tableBody = document.getElementById('registryTableBody');
+            const dispatchContainer = document.getElementById('pendingDispatchContainer');
+            
             tableBody.innerHTML = '';
+            dispatchContainer.innerHTML = '';
+            
+            let pendingDispatchCount = 0;
 
             if (snapshot.exists()) {
                 snapshot.forEach((childSnapshot) => {
                     const order = childSnapshot.val();
                     
-                    // Determine Status CSS Pill Styling
+                    // 1. Build Master Grid Row
                     let statusClass = 'pill-pending';
-                    if (order.status === "Work Order Dispatched" || order.status === "Arrived at WMS Hub") {
-                        statusClass = 'pill-transit';
-                    } else if (order.status === "Slotted in Storage") {
-                        statusClass = 'pill-stored';
-                    }
-
-                    // Build dimensions string safely
-                    const dims = order.dimensions ? `${order.dimensions.length}x${order.dimensions.width}x${order.dimensions.height} cm` : 'N/A';
+                    if (order.status === "Work Order Dispatched") statusClass = 'pill-dispatched';
+                    if (order.status === "Booking Accepted by Fleet") statusClass = 'pill-accepted';
+                    if (order.status === "Slotted in Storage") statusClass = 'pill-stored';
 
                     const rowHTML = `
                         <tr>
-                            <td style="font-family: monospace; font-weight: bold; color: #ff7300; font-size: 14px;">${order.tracking_code || 'N/A'}</td>
-                            <td>
-                                <strong>${order.customer_name || 'N/A'}</strong><br>
-                                <span style="font-size:11px; color:#777;">📞 ${order.customer_contact || 'N/A'}</span>
-                            </td>
-                            <td>
-                                <span style="color:#fff;">📍 ${order.origin}</span><br>
-                                <span style="color:#aaa; font-size:11px;">➔ 🏁 ${order.destination}</span>
-                            </td>
-                            <td>
-                                <span style="color:#eee;">${order.package_type || 'Package'}</span><br>
-                                <span style="font-size:11px; color:#888;">Scale: ${order.weight_kg} KG | ${dims}</span>
-                            </td>
-                            <td><span class="mode-badge">${order.transport_mode || 'Road'}</span></td>
-                            <td style="color: #00ff66; font-weight: bold; font-family: monospace; font-size: 14px;">₹${order.total_quotation || '0.00'}</td>
+                            <td style="font-family: monospace; font-weight: bold; color: #ff7300;">${order.tracking_code}</td>
+                            <td><strong>${order.customer_name}</strong><br><span style="font-size:11px;color:#777;">📞 ${order.customer_contact}</span></td>
+                            <td>📍 ${order.origin}<br><span style="color:#777; font-size:11px;">➔ 🏁 ${order.destination}</span></td>
+                            <td>${order.package_type}<br><span style="font-size:11px; color:#888;">${order.weight_kg} KG</span></td>
+                            <td><span style="background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:4px;">${order.transport_mode}</span></td>
+                            <td style="color: #00ff66; font-family: monospace;">₹${order.total_quotation}</td>
                             <td><span class="status-pill ${statusClass}">${order.status}</span></td>
                         </tr>
                     `;
                     tableBody.insertAdjacentHTML('beforeend', rowHTML);
+
+                    // 2. Build Dispatch Card if order needs a driver assignment
+                    if (order.status === "Pending Officer Review") {
+                        pendingDispatchCount++;
+                        const dispatchCardHTML = `
+                            <div class="dispatch-card">
+                                <h4>Code: ${order.tracking_code}</h4>
+                                <p><strong>Client:</strong> ${order.customer_name}</p>
+                                <p><strong>Pickup:</strong> ${order.origin}</p>
+                                <p><strong>Dropoff:</strong> ${order.destination}</p>
+                                <p><strong>Specs:</strong> ${order.weight_kg}kg | Mode: ${order.transport_mode}</p>
+                                <div class="assign-box">
+                                    <input type="text" id="assign_${order.tracking_code}" placeholder="Enter Driver Name...">
+                                    <button onclick="dispatchOrder('${order.tracking_code}')">Dispatch</button>
+                                </div>
+                            </div>
+                        `;
+                        dispatchContainer.insertAdjacentHTML('beforeend', dispatchCardHTML);
+                    }
                 });
-            } else {
-                tableBody.innerHTML = `<tr><td colspan="7" style="color: #aaa; text-align: center; padding: 20px;">No operational cargo records found inside the system database.</td></tr>`;
+            }
+
+            if(pendingDispatchCount === 0) {
+                dispatchContainer.innerHTML = `<p style="color:#aaa; grid-column:1/-1;">No inbound bookings currently waiting for workforce assignments.</p>`;
             }
         });
 
-        // 🔍 Live Tabular Filtering Engine (Search Feature)
-        function filterRegistryTable() {
-            const input = document.getElementById("orderSearchInput");
-            const filter = input.value.toUpperCase();
-            const table = document.getElementById("registryTableBody");
-            const tr = table.getElementsByTagName("tr");
+        function dispatchOrder(trackCode) {
+            const driverName = document.getElementById(`assign_${trackCode}`).value.trim();
+            if(!driverName) {
+                alert("Please enter an operational driver's name before dispatching!");
+                return;
+            }
 
-            // Loop through all table rows, hide those that don't match the search filter
+            database.ref(`customer_requests/${trackCode}`).update({
+                status: "Work Order Dispatched",
+                assigned_to: driverName
+            }).then(() => {
+                alert(`Order ${trackCode} successfully dispatched to ${driverName}!`);
+            });
+        }
+
+        function filterRegistryTable() {
+            const filter = document.getElementById("orderSearchInput").value.toUpperCase();
+            const tr = document.getElementById("registryTableBody").getElementsByTagName("tr");
             for (let i = 0; i < tr.length; i++) {
-                const td = tr[i].getElementsByTagName("td")[0]; // Column 0 is Track Code
+                const td = tr[i].getElementsByTagName("td")[0];
                 if (td) {
-                    const txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
+                    tr[i].style.display = (td.textContent || td.innerText).toUpperCase().indexOf(filter) > -1 ? "" : "none";
                 }
             }
         }
