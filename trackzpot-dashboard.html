@@ -6,19 +6,92 @@
     <title>Trackzpot - Fleet Operations Terminal</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .workspace-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; padding: 30px 4%; width: 100%; box-sizing: border-box; }
-        .sidebar { background: #0d1527; padding: 25px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); height: fit-content; }
-        .sidebar h4 { color: #ff7300; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; }
-        .nav-link { display: block; color: #ccc; padding: 10px 0; font-size: 14px; text-decoration: none; cursor: pointer; }
-        .nav-link:hover { color: #ff7300; }
+        .workspace-layout { 
+            display: grid; 
+            grid-template-columns: 280px 1fr; 
+            gap: 30px; 
+            padding: 30px 4%; 
+            width: 100%; 
+            box-sizing: border-box; 
+        }
+        .sidebar { 
+            background: #0d1527; 
+            padding: 25px; 
+            border-radius: 10px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            height: fit-content; 
+        }
+        .sidebar h4 { 
+            color: #ff7300; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            margin-bottom: 15px; 
+            letter-spacing: 0.5px; 
+        }
+        .nav-link { 
+            display: block; 
+            color: #ccc; 
+            padding: 10px 0; 
+            font-size: 14px; 
+            text-decoration: none; 
+            cursor: pointer; 
+            transition: color 0.2s;
+        }
+        .nav-link:hover { 
+            color: #ff7300; 
+        }
         
-        .main-panel { background: #0d1527; border: 1px solid rgba(255,255,255,0.08); padding: 35px; border-radius: 12px; }
-        .task-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 25px; border-radius: 8px; margin-bottom: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+        .main-panel { 
+            background: #0d1527; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            padding: 35px; 
+            border-radius: 12px; 
+        }
+        .task-card { 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+            padding: 25px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            display: grid; 
+            grid-template-columns: 1.2fr 1fr; 
+            gap: 20px; 
+            border-left: 4px solid #ff7300;
+        }
         
-        .form-block { display: flex; flex-direction: column; gap: 8px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05); }
-        .form-block input { background: #16223f; border: 1px solid #3d4f73; color: white; padding: 8px; border-radius: 4px; font-size: 13px; outline: none; }
-        .action-btn { background: #00ff66; color: #000; border: none; padding: 10px; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 12px; }
-        .accept-btn { background: #00bcff; color: white; }
+        .form-block { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            background: rgba(0, 0, 0, 0.3); 
+            padding: 15px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+        .form-block input { 
+            background: #16223f; 
+            border: 1px solid #3d4f73; 
+            color: white; 
+            padding: 8px; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            outline: none; 
+        }
+        .action-btn { 
+            background: #00ff66; 
+            color: #000; 
+            border: none; 
+            padding: 10px; 
+            font-weight: bold; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            transition: background 0.2s;
+        }
+        .action-btn:hover {
+            background: #00cc52;
+        }
     </style>
 </head>
 <body>
@@ -39,8 +112,8 @@
             </aside>
 
             <main class="main-panel" id="mainWorkspace">
-                <h2 style="font-size:24px; color:#fff; margin-bottom:10px;">Operator Dashboard Workspace</h2>
-                <p style="color:#aaa; font-size:14px;">Select "Active Assigned Shifts" from the sidebar workspace panel to see your live real-time assignments.</p>
+                <h2 style="font-size: 24px; color: #fff; margin-bottom: 10px;">Operator Dashboard Workspace</h2>
+                <p style="color: #aaa; font-size: 14px;">Select "Active Assigned Shifts" from the sidebar workspace panel to see your live real-time assignments.</p>
             </main>
         </div>
     </div>
@@ -60,10 +133,10 @@
 
         function loadDispatchedRuns() {
             document.getElementById('mainWorkspace').innerHTML = `
-                <h2 style="font-size:22px; margin-bottom:5px; color:#fff;">Live Active Fleet Manifests</h2>
-                <p style="color:#888; font-size:13px; margin-bottom:20px;">Review, accept, and update inbound cargo requests assigned to you.</p>
+                <h2 style="font-size: 22px; margin-bottom: 5px; color: #fff;">Live Active Fleet Manifests</h2>
+                <p style="color: #888; font-size: 13px; margin-bottom: 20px;">Review and complete transit actions for outbound requests assigned to your station.</p>
                 <div id="runsContainer">
-                    <p style="color:#555;">Syncing active cloud records...</p>
+                    <p style="color: #555;">Syncing active cloud records...</p>
                 </div>
             `;
 
@@ -77,43 +150,26 @@
                     snapshot.forEach((childSnapshot) => {
                         const item = childSnapshot.val();
 
-                        // Capture both freshly dispatched tasks and accepted traveling tasks
-                        if (item.status === "Work Order Dispatched" || item.status === "Booking Accepted by Fleet") {
+                        // Only shows orders that have been officially dispatched to operators
+                        if (item.status === "Work Order Dispatched") {
                             hasTasks = true;
 
-                            let workflowInterfaceHTML = '';
-
-                            if (item.status === "Work Order Dispatched") {
-                                // Sub-workflow step 1: Driver accepts the dispatch assignment
-                                workflowInterfaceHTML = `
-                                    <div style="text-align: center; padding: 20px 0;">
-                                        <p style="color:#ffcc00; font-size:13px; margin-bottom:10px; font-weight:bold;">⚠️ Status: Waiting for your confirmation</p>
-                                        <button class="action-btn accept-btn" style="width:100%;" onclick="acceptBooking('${item.tracking_code}')">✔️ Accept Booking & Lock Run</button>
-                                    </div>
-                                `;
-                            } else {
-                                // Sub-workflow step 2: Driver inputs parameters and drops freight off at hub
-                                workflowInterfaceHTML = `
-                                    <div class="form-block">
-                                        <label style="font-size:11px; color:#aaa; font-weight:bold; text-transform:uppercase;">Log Transit Details</label>
-                                        <input type="text" id="truck_${item.tracking_code}" placeholder="Truck Container Plate No.">
-                                        <input type="text" id="eta_${item.tracking_code}" placeholder="Estimated Hours to Hub (e.g., 3 hrs)">
-                                        <button class="action-btn" onclick="finalizeDelivery('${item.tracking_code}')">🏁 Arrived & Land at Dock</button>
-                                    </div>
-                                `;
-                            }
-
                             const cardHTML = `
-                                <div class="task-card" style="border-left: 4px solid ${item.status === 'Work Order Dispatched' ? '#ffcc00' : '#00bcff'}">
+                                <div class="task-card">
                                     <div>
-                                        <h3 style="color:#ff7300; font-size:18px; margin-bottom:8px;">Manifest: ${item.tracking_code}</h3>
+                                        <h3 style="color: #ff7300; font-size: 18px; margin-bottom: 8px;">Manifest: ${item.tracking_code}</h3>
                                         <p><strong>Route Profiles:</strong> From ${item.origin} ➔ To ${item.destination}</p>
                                         <p><strong>Client / Payer:</strong> ${item.customer_name}</p>
                                         <p><strong>Cargo Parameters:</strong> ${item.weight_kg} KG | ${item.package_type}</p>
-                                        <p style="margin-top:10px; color:#fff;"><strong>Assigned Operator:</strong> ${item.assigned_to}</p>
+                                        <p style="margin-top: 10px; color: #fff;"><strong>Assigned Operator:</strong> ${item.assigned_to}</p>
                                     </div>
                                     <div>
-                                        ${workflowInterfaceHTML}
+                                        <div class="form-block">
+                                            <label style="font-size: 11px; color: #aaa; font-weight: bold; text-transform: uppercase;">Log Transit Details</label>
+                                            <input type="text" id="truck_${item.tracking_code}" placeholder="Truck Container Plate No.">
+                                            <input type="text" id="eta_${item.tracking_code}" placeholder="Estimated Hours to Hub (e.g., 3 hrs)">
+                                            <button class="action-btn" onclick="finalizeDelivery('${item.tracking_code}')">🏁 Arrived & Land at Dock</button>
+                                        </div>
                                     </div>
                                 </div>
                             `;
@@ -123,21 +179,11 @@
                 }
 
                 if (!hasTasks) {
-                    container.innerHTML = '<p style="color:#aaa;">No open operational tasks are linked to your profile right now.</p>';
+                    container.innerHTML = '<p style="color: #aaa;">No open operational tasks are linked to your profile right now.</p>';
                 }
             });
         }
 
-        // Action 1: Update status to Accepted
-        function acceptBooking(trackCode) {
-            database.ref(`customer_requests/${trackCode}`).update({
-                status: "Booking Accepted by Fleet"
-            }).then(() => {
-                alert(`Manifest ${trackCode} successfully marked as Accepted! Prepare your cargo vehicle configuration.`);
-            });
-        }
-
-        // Action 2: Process transit inputs and land order at warehouse loading dock
         function finalizeDelivery(trackCode) {
             const truckPlate = document.getElementById(`truck_${trackCode}`).value.trim();
             const etaDuration = document.getElementById(`eta_${trackCode}`).value.trim();
@@ -148,7 +194,7 @@
             }
 
             database.ref(`customer_requests/${trackCode}`).update({
-                status: "Arrived at WMS Hub",
+                status: "Slotted in Storage",
                 fleet_vehicle: truckPlate,
                 transit_eta: etaDuration,
                 logged_at: Date.now()
