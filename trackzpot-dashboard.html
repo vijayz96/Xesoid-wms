@@ -1,3 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackzpot Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .work-grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 30px;
+            width: 100%;
+            padding: 20px 4%;
+            flex: 1;
+        }
+        .sub-menu-panel {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+        }
+        .sub-menu-panel h4 {
+            color: #ff7300;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .sub-link {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            padding: 10px 8px;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.2s;
+        }
+        .sub-link:hover {
+            color: #fff;
+            padding-left: 12px;
+            background: rgba(255,115,0,0.1);
+        }
+        .display-workspace {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 40px;
+            min-height: 450px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-container">
+        <header class="navbar">
+            <div class="logo">Track<span class="highlight">zpot</span></div>
+            <nav class="nav-menu">
+                <a href="#" class="active" onclick="switchTab('home')">HOME</a>
+                <a href="#" onclick="switchTab('tasks')">TASKS</a>
+                <a href="#" onclick="switchTab('request')">REQUEST</a>
+                <a href="#" onclick="switchTab('booking')">BOOKING</a>
+                <a href="#" onclick="switchTab('delivery')">DELIVERY</a>
+                <a href="#" onclick="switchTab('service')">SERVICE ORDERS</a>
+                <a href="#" onclick="switchTab('vehicle')">VEHICLE / DRIVER</a>
+                <a href="#" onclick="switchTab('invoices')">INVOICES</a>
+                <a href="#" onclick="switchTab('reports')">REPORTS</a>
+                <a href="#" onclick="switchTab('analytics')">ANALYTICS</a>
+                <a href="#" onclick="switchTab('settings')">SETTINGS</a>
+                <a href="portal.html" style="color: #ff7300;">SWITCH PORTAL</a>
+            </nav>
+        </header>
+
+        <div class="work-grid">
+            
+            <aside class="sub-menu-panel" id="subMenuContainer">
+                <h4>Home Hub</h4>
+                <div class="sub-link">• Operational Summary Dashboard</div>
+            </aside>
+
+            <main class="display-workspace" id="mainWorkspace">
+                <h2 style="font-size: 28px; margin-bottom: 10px;">Welcome to Trackzpot</h2>
+                <p style="color: #aaa; line-height: 1.6;">Select any top dashboard module component option to instantly load operational submenus and active transaction records.</p>
+            </main>
+
+        </div>
+    </div>
+
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
@@ -108,3 +197,5 @@
         });
     }
 </script>
+</body>
+</html>
